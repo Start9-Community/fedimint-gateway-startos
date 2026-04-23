@@ -42,13 +42,17 @@ export const resetPassword = sdk.Action.withoutInput(
           { env: { FS_MISTRUST_DISABLE_PERMISSIONS_CHECKS: 'true' } },
         )
         if (result.exitCode !== 0) {
+          // gateway-cli prints the bcrypt hash to stdout and errors to stderr.
+          // Surface the stderr verbatim so the user can share it when filing
+          // an issue; the leading message is translated.
           throw new Error(
-            `gateway-cli create-password-hash failed (exit ${result.exitCode}): ${String(
+            `${i18n('Failed to hash Gateway password')} (exit ${result.exitCode}): ${String(
               result.stderr,
             ).trim()}`,
           )
         }
-        return String(result.stdout).replace(/["\n\r]/g, '').trim()
+        // gateway-cli wraps the bcrypt hash in double quotes; strip them.
+        return String(result.stdout).replace(/"/g, '').trim()
       },
     )
 

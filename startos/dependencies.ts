@@ -1,26 +1,44 @@
-import { T } from '@start9labs/start-sdk'
-import { sdk } from './sdk'
+import { autoconfig as bitcoindAutoconfig } from 'bitcoin-core-startos/startos/actions/config/autoconfig'
 import { storeJson } from './fileModels/store'
+import { i18n } from './i18n'
+import { sdk } from './sdk'
 
 export const setDependencies = sdk.setupDependencies(async ({ effects }) => {
   const store = await storeJson.read().const(effects)
-  const deps: T.CurrentDependenciesResult<any> = {}
 
   if (store?.bitcoinBackend?.type === 'bitcoind') {
-    deps.bitcoind = {
-      kind: 'running',
-      versionRange: '>=28.3:5',
-      healthChecks: ['bitcoind', 'sync-progress'],
-    }
+    await sdk.action.createTask(
+      effects,
+      'bitcoind',
+      bitcoindAutoconfig,
+      'critical',
+      {
+        input: {
+          kind: 'partial',
+          value: { wallet: { enable: true } },
+        },
+        when: { condition: 'input-not-matches', once: false },
+        reason: i18n(
+          'Fedimint Gateway requires the bitcoind wallet RPC enabled',
+        ),
+      },
+    )
   }
 
-  if (store?.lightningBackend?.type === 'lnd') {
-    deps.lnd = {
-      kind: 'running',
-      versionRange: '>=0.20.1-beta:1',
-      healthChecks: ['sync-progress'],
-    }
+  return {
+    ...(store?.bitcoinBackend?.type === 'bitcoind' && {
+      bitcoind: {
+        kind: 'running',
+        versionRange: '>=28.3:5',
+        healthChecks: ['bitcoind', 'sync-progress'],
+      },
+    }),
+    ...(store?.lightningBackend?.type === 'lnd' && {
+      lnd: {
+        kind: 'running',
+        versionRange: '>=0.20.1-beta:3',
+        healthChecks: ['sync-progress'],
+      },
+    }),
   }
-
-  return deps
 })

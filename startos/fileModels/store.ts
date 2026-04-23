@@ -1,6 +1,6 @@
 import { FileHelper } from '@start9labs/start-sdk'
 import { sdk } from '../sdk'
-import { DEFAULT_LDK_ALIAS, DEFAULT_RUST_LOG } from '../utils'
+import { DEFAULT_LDK_ALIAS } from '../utils'
 import { z } from 'zod'
 
 const ldkVariant = z.object({
@@ -36,7 +36,6 @@ const shape = z.object({
   lightningBackend,
   bitcoinBackend,
   passwordHash: z.string().nullable().catch(null),
-  rustLog: z.string().catch(DEFAULT_RUST_LOG),
 })
 
 export const storeJson = FileHelper.json(

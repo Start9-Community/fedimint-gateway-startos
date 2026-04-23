@@ -1,5 +1,5 @@
 import { setupManifest } from '@start9labs/start-sdk'
-import { long, short } from './i18n'
+import { depBitcoindDescription, depLndDescription, long, short } from './i18n'
 
 export const manifest = setupManifest({
   id: 'fedimint-gatewayd',
@@ -18,27 +18,17 @@ export const manifest = setupManifest({
       arch: ['x86_64', 'aarch64'],
     },
   },
-  alerts: {
-    install: null,
-    update: null,
-    uninstall: null,
-    restore: null,
-    start: null,
-    stop: null,
-  },
   dependencies: {
     bitcoind: {
-      description:
-        'Provides private, self-hosted blockchain data instead of relying on external Esplora APIs',
+      description: depBitcoindDescription,
       optional: true,
       metadata: {
-        title: 'Bitcoin Core',
+        title: 'Bitcoin',
         icon: 'https://raw.githubusercontent.com/Start9Labs/bitcoin-core-startos/feec0b1dae42961a257948fe39b40caf8672fce1/dep-icon.svg',
       },
     },
     lnd: {
-      description:
-        'Use your existing LND node instead of the integrated LDK node',
+      description: depLndDescription,
       optional: true,
       metadata: {
         title: 'LND',

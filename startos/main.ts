@@ -1,10 +1,10 @@
-import { readFile } from 'fs/promises'
 import { FileHelper } from '@start9labs/start-sdk'
+import { manifest as bitcoinManifest } from 'bitcoin-core-startos/startos/manifest'
+import { manifest as lndManifest } from 'lnd-startos/startos/manifest'
+import { storeJson } from './fileModels/store'
 import { i18n } from './i18n'
 import { sdk } from './sdk'
-import { storeJson } from './fileModels/store'
 import {
-  DEFAULT_RUST_LOG,
   bitcoindCookiePath,
   bitcoindMountpoint,
   irohPort,
@@ -19,18 +19,17 @@ export const main = sdk.setupMain(async ({ effects }) => {
   console.info(i18n('Starting Fedimint Gateway...'))
 
   const store = await storeJson.read().const(effects)
-  if (!store) throw new Error('Store not found')
+  if (!store) {
+    throw new Error(i18n('Store not found'))
+  }
   if (!store.passwordHash) {
-    throw new Error('Gateway password is not set')
+    throw new Error(i18n('Gateway password is not set'))
   }
   if (!store.lightningBackend || !store.bitcoinBackend) {
     throw new Error(
-      'Gateway backends are not configured — run the Configuration task',
+      i18n('Gateway backends are not configured. Complete the setup tasks.'),
     )
   }
-
-  const depResult = await sdk.checkDependencies(effects)
-  depResult.throwIfNotSatisfied()
 
   const { lightningBackend, bitcoinBackend } = store
 
@@ -44,7 +43,6 @@ export const main = sdk.setupMain(async ({ effects }) => {
     FM_GATEWAY_LISTEN_ADDR: `0.0.0.0:${uiPort}`,
     FM_GATEWAY_IROH_LISTEN_ADDR: `0.0.0.0:${irohPort}`,
     FM_GATEWAY_BCRYPT_PASSWORD_HASH: store.passwordHash,
-    RUST_LOG: store.rustLog || DEFAULT_RUST_LOG,
     // Disable Arti's fs-mistrust permission checks. These invoke
     // getpwuid/getpwnam via libc, which reads /etc/passwd. The Dockerfile
     // materializes the upstream's /etc/passwd symlink, but this is a
@@ -53,7 +51,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
     FS_MISTRUST_DISABLE_PERMISSIONS_CHECKS: 'true',
   }
 
-  const mounts = sdk.Mounts.of()
+  let mounts = sdk.Mounts.of()
     .mountVolume({
       volumeId: 'main',
       subpath: null,
@@ -68,7 +66,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
     })
 
   if (bitcoinBackend.type === 'bitcoind') {
-    mounts.mountDependency({
+    mounts = mounts.mountDependency<typeof bitcoinManifest>({
       dependencyId: 'bitcoind',
       volumeId: 'main',
       subpath: null,
@@ -78,7 +76,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
   }
 
   if (lightningBackend.type === 'lnd') {
-    mounts.mountDependency({
+    mounts = mounts.mountDependency<typeof lndManifest>({
       dependencyId: 'lnd',
       volumeId: 'main',
       subpath: null,
@@ -95,17 +93,19 @@ export const main = sdk.setupMain(async ({ effects }) => {
   )
 
   if (bitcoinBackend.type === 'bitcoind') {
-    // React to bitcoind cookie rotation
-    await FileHelper.string(`${gatewaydSubc.rootfs}${bitcoindCookiePath}`)
+    // Re-read (and restart) when bitcoind rotates the cookie
+    const cookieRaw = await FileHelper.string(
+      `${gatewaydSubc.rootfs}${bitcoindCookiePath}`,
+    )
       .read()
       .const(effects)
-
-    const cookie = (
-      await readFile(`${gatewaydSubc.rootfs}${bitcoindCookiePath}`, 'utf-8')
-    ).trim()
+    if (!cookieRaw) {
+      throw new Error(i18n('Bitcoind cookie is missing'))
+    }
+    const cookie = cookieRaw.trim()
     const sep = cookie.indexOf(':')
     if (sep < 0) {
-      throw new Error('Malformed bitcoind cookie')
+      throw new Error(i18n('Bitcoind cookie is malformed'))
     }
     env.FM_BITCOIND_URL = 'http://bitcoind.startos:8332'
     env.FM_BITCOIND_USERNAME = cookie.slice(0, sep)

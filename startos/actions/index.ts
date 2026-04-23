@@ -1,7 +1,9 @@
 import { sdk } from '../sdk'
-import { config } from './config'
+import { configBitcoin } from './configBitcoin'
+import { configLightning } from './configLightning'
 import { resetPassword } from './resetPassword'
 
 export const actions = sdk.Actions.of()
-  .addAction(config)
+  .addAction(configLightning)
+  .addAction(configBitcoin)
   .addAction(resetPassword)
