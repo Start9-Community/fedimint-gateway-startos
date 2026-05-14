@@ -9,7 +9,6 @@ export const manifest = setupManifest({
   upstreamRepo: 'https://github.com/fedimint/fedimint',
   marketingUrl: 'https://fedimint.org/',
   donationUrl: null,
-  docsUrls: ['https://fedimint.org'],
   description: { short, long },
   volumes: ['main', 'gatewayd'],
   images: {
