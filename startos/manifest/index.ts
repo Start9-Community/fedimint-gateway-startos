@@ -5,7 +5,7 @@ export const manifest = setupManifest({
   id: 'fedimint-gatewayd',
   title: 'Fedimint Gateway',
   license: 'MIT',
-  packageRepo: 'https://github.com/Start9Labs/gatewayd-startos',
+  packageRepo: 'https://github.com/Start9-Community/fedimint-gateway-startos',
   upstreamRepo: 'https://github.com/fedimint/fedimint',
   marketingUrl: 'https://fedimint.org/',
   donationUrl: null,
