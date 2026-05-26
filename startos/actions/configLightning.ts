@@ -43,16 +43,26 @@ const inputSpec = InputSpec.of({
 
 export const configLightning = sdk.Action.withInput(
   'config-lightning',
-  async ({ effects }) => ({
-    name: i18n('Lightning Configuration'),
-    description: i18n("Configure the Gateway's Lightning backend"),
-    warning: i18n(
-      'This cannot be changed later. Switching Lightning backend orphans any existing channels and federation registrations.',
-    ),
-    allowedStatuses: 'only-stopped',
-    group: null,
-    visibility: 'hidden',
-  }),
+  async ({ effects }) => {
+    // Reachable only until a Lightning backend is chosen, then hidden — the
+    // backend is configure-once. Changing it later would orphan existing
+    // channels and federation registrations, so we never expose a path to do
+    // so once it is set. (tasksOnInstall likewise only surfaces the task while
+    // it is unset.)
+    const configured = !!(await storeJson
+      .read((s) => s.lightningBackend)
+      .const(effects))
+    return {
+      name: i18n('Lightning Configuration'),
+      description: i18n("Configure the Gateway's Lightning backend"),
+      warning: i18n(
+        'This cannot be changed later. Switching Lightning backend orphans any existing channels and federation registrations.',
+      ),
+      allowedStatuses: 'only-stopped',
+      group: null,
+      visibility: configured ? 'hidden' : 'enabled',
+    }
+  },
   inputSpec,
   async ({ effects }) => {
     const store = await storeJson.read().once()
