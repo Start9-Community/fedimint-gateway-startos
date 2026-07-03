@@ -1,6 +1,8 @@
-import { FileHelper } from '@start9labs/start-sdk'
+import { FileHelper, utils } from '@start9labs/start-sdk'
 import { manifest as bitcoinManifest } from 'bitcoin-core-startos/startos/manifest'
+import { rpcHostId, rpcInterfaceId } from 'bitcoin-core-startos/startos/utils'
 import { manifest as lndManifest } from 'lnd-startos/startos/manifest'
+import { gRPCHostId, gRPCInterfaceId } from 'lnd-startos/startos/interfaces'
 import { storeJson } from './fileModels/store'
 import { i18n } from './i18n'
 import { sdk } from './sdk'
@@ -14,6 +16,29 @@ import {
   lndTlsCert,
   uiPort,
 } from './utils'
+
+// The IPv4 LXC-bridge hostname/port for an interface on an already-resolved
+// FilledHost. Pure — call it INSIDE a sdk.host map fn so .const() reacts only
+// to this address. Containers reach each other over the bridge, not `.startos`
+// DNS; `ssl` narrows to the http/https variant when an interface exposes both.
+const bridgeAddr = (
+  host: utils.FilledHost | null,
+  interfaceId: string,
+  ssl?: boolean,
+) => {
+  const iface =
+    host &&
+    Object.values(host.bindings)
+      .flatMap((b) => Object.values(b.interfaces))
+      .find((i) => i.id === interfaceId)
+  return iface
+    ? iface.addressInfo.filter({
+        kind: 'bridge',
+        predicate: (h) =>
+          h.metadata.kind === 'ipv4' && (ssl === undefined || h.ssl === ssl),
+      }).hostnames[0]
+    : undefined
+}
 
 export const main = sdk.setupMain(async ({ effects }) => {
   console.info(i18n('Starting Fedimint Gateway...'))
@@ -85,7 +110,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
     })
   }
 
-  const gatewaydSubc = await sdk.SubContainer.of(
+  const gatewaydSubc = await sdk.SubContainer.eager(
     effects,
     { imageId: 'gatewayd' },
     mounts,
@@ -107,7 +132,18 @@ export const main = sdk.setupMain(async ({ effects }) => {
     if (sep < 0) {
       throw new Error(i18n('Bitcoind cookie is malformed'))
     }
-    env.FM_BITCOIND_URL = 'http://bitcoind.startos:8332'
+    const bitcoindUrl = await sdk.host
+      .get(effects, { hostId: rpcHostId, packageId: 'bitcoind' }, (host) => {
+        const h = bridgeAddr(host, rpcInterfaceId, false)
+        return h && `http://${h.hostname}:${h.port}`
+      })
+      .const()
+    if (!bitcoindUrl) {
+      throw new Error(
+        i18n('Bitcoin Core is not yet reachable on the internal network'),
+      )
+    }
+    env.FM_BITCOIND_URL = bitcoindUrl
     env.FM_BITCOIND_USERNAME = cookie.slice(0, sep)
     env.FM_BITCOIND_PASSWORD = cookie.slice(sep + 1)
   } else {
@@ -117,7 +153,16 @@ export const main = sdk.setupMain(async ({ effects }) => {
   let gatewayMode: 'ldk' | 'lnd'
   if (lightningBackend.type === 'lnd') {
     gatewayMode = 'lnd'
-    env.FM_LND_RPC_ADDR = 'https://lnd.startos:10009'
+    const lndUrl = await sdk.host
+      .get(effects, { hostId: gRPCHostId, packageId: 'lnd' }, (host) => {
+        const h = bridgeAddr(host, gRPCInterfaceId, true)
+        return h && `https://${h.hostname}:${h.port}`
+      })
+      .const()
+    if (!lndUrl) {
+      throw new Error(i18n('LND is not yet reachable on the internal network'))
+    }
+    env.FM_LND_RPC_ADDR = lndUrl
     env.FM_LND_TLS_CERT = lndTlsCert
     env.FM_LND_MACAROON = lndMacaroon
   } else {

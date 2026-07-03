@@ -65,6 +65,10 @@ const dict = {
 
   // dependencies.ts
   'Fedimint Gateway requires the bitcoind wallet RPC enabled': 48,
+
+  // main.ts (dependency reachability over the internal bridge)
+  'Bitcoin Core is not yet reachable on the internal network': 49,
+  'LND is not yet reachable on the internal network': 50,
 } as const
 
 /**

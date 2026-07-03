@@ -43,6 +43,8 @@ export default {
     46: 'Los backends del Gateway no están configurados. Completa las tareas de configuración.',
     47: 'Nodo LND local',
     48: 'Fedimint Gateway requiere la RPC de cartera de bitcoind habilitada',
+    49: 'Bitcoin Core aún no es accesible en la red interna',
+    50: 'LND aún no es accesible en la red interna',
   },
   de_DE: {
     0: 'Fedimint Gateway wird gestartet...',
@@ -86,6 +88,8 @@ export default {
     46: 'Die Gateway-Backends sind nicht konfiguriert. Schließe die Einrichtungsaufgaben ab.',
     47: 'Lokaler LND-Knoten',
     48: 'Fedimint Gateway benötigt die aktivierte Wallet-RPC von bitcoind',
+    49: 'Bitcoin Core ist im internen Netzwerk noch nicht erreichbar',
+    50: 'LND ist im internen Netzwerk noch nicht erreichbar',
   },
   pl_PL: {
     0: 'Uruchamianie Fedimint Gateway...',
@@ -129,6 +133,8 @@ export default {
     46: 'Backendy Gateway nie są skonfigurowane. Wykonaj zadania konfiguracyjne.',
     47: 'Lokalny węzeł LND',
     48: 'Fedimint Gateway wymaga włączonego RPC portfela bitcoind',
+    49: 'Bitcoin Core nie jest jeszcze osiągalny w sieci wewnętrznej',
+    50: 'LND nie jest jeszcze osiągalny w sieci wewnętrznej',
   },
   fr_FR: {
     0: 'Démarrage de Fedimint Gateway...',
@@ -172,5 +178,7 @@ export default {
     46: 'Les backends du Gateway ne sont pas configurés. Terminez les tâches de configuration.',
     47: 'Nœud LND local',
     48: 'Fedimint Gateway nécessite l’activation de la RPC de portefeuille de bitcoind',
+    49: 'Bitcoin Core n’est pas encore accessible sur le réseau interne',
+    50: 'LND n’est pas encore accessible sur le réseau interne',
   },
 } satisfies Record<string, LangDict>

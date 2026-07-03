@@ -20,18 +20,13 @@ type OldConfig = {
 }
 
 export const current = VersionInfo.of({
-  version: '0.11.1:1',
+  version: '0.11.1:2',
   releaseNotes: {
-    en_US: `- Fixes the Lightning and Bitcoin backend being left unset when upgrading from a StartOS 0.3.5 install, which left the Gateway unable to start
-- Internal updates (start-sdk 1.5.3)`,
-    es_ES: `- Corrige que los backends de Lightning y Bitcoin quedaran sin configurar al actualizar desde una instalación de StartOS 0.3.5, lo que impedía iniciar el Gateway
-- Actualizaciones internas (start-sdk 1.5.3)`,
-    de_DE: `- Behebt, dass das Lightning- und Bitcoin-Backend beim Upgrade von einer StartOS-0.3.5-Installation nicht gesetzt wurde, wodurch das Gateway nicht starten konnte
-- Interne Aktualisierungen (start-sdk 1.5.3)`,
-    pl_PL: `- Naprawia brak konfiguracji backendu Lightning i Bitcoin podczas aktualizacji z instalacji StartOS 0.3.5, co uniemożliwiało uruchomienie Gateway
-- Aktualizacje wewnętrzne (start-sdk 1.5.3)`,
-    fr_FR: `- Corrige les backends Lightning et Bitcoin laissés non configurés lors de la mise à niveau depuis une installation StartOS 0.3.5, empêchant le démarrage du Gateway
-- Mises à jour internes (start-sdk 1.5.3)`,
+    en_US: 'Internal updates (start-sdk 2.0.x)',
+    es_ES: 'Actualizaciones internas (start-sdk 2.0.x)',
+    de_DE: 'Interne Aktualisierungen (start-sdk 2.0.x)',
+    pl_PL: 'Aktualizacje wewnętrzne (start-sdk 2.0.x)',
+    fr_FR: 'Mises à jour internes (start-sdk 2.0.x)',
   },
   migrations: {
     // Upgrading from a StartOS 0.3.5 install: carry the user's previous
