@@ -117,7 +117,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
     }).const()
     if (!bitcoindAddr) {
       throw new Error(
-        i18n('Bitcoin Core is not yet reachable on the internal network'),
+        i18n('Bitcoin is not yet reachable on the internal network'),
       )
     }
     env.FM_BITCOIND_URL = `http://${bitcoindAddr}`

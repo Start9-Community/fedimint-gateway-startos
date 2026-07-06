@@ -15,7 +15,7 @@ export const setDependencies = sdk.setupDependencies(async ({ effects }) => {
       {
         input: {
           kind: 'partial',
-          accept: [{ wallet: { enable: true } }],
+          accept: [{ wallet: { enable: true } }, { wallet: { enable: null } }],
           set: { wallet: { enable: true } },
         },
         when: { condition: 'input-not-matches', once: false },
