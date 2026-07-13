@@ -1,5 +1,5 @@
 {
-  "name": "gatewayd-startos",
+  "name": "fedimint-gateway-startos",
   "scripts": {
     "build": "rm -rf ./javascript && ncc build startos/index.ts -o ./javascript",
     "prettier": "prettier --write startos",
