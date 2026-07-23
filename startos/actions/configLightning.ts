@@ -1,12 +1,9 @@
-import {
-  InputSpec,
-  Value,
-  Variants,
-} from '@start9labs/start-sdk/base/lib/actions/input/builder'
 import { storeJson } from '../fileModels/store'
 import { i18n } from '../i18n'
 import { sdk } from '../sdk'
 import { DEFAULT_LDK_ALIAS } from '../utils'
+
+const { InputSpec, Value, Variants } = sdk
 
 const inputSpec = InputSpec.of({
   lightningBackend: Value.union({

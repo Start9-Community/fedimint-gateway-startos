@@ -15,7 +15,8 @@ export const setDependencies = sdk.setupDependencies(async ({ effects }) => {
       {
         input: {
           kind: 'partial',
-          value: { wallet: { enable: true } },
+          accept: [{ wallet: { enable: true } }],
+          set: { wallet: { enable: true } },
         },
         when: { condition: 'input-not-matches', once: false },
         reason: i18n(
@@ -29,14 +30,14 @@ export const setDependencies = sdk.setupDependencies(async ({ effects }) => {
     ...(store?.bitcoinBackend?.type === 'bitcoind' && {
       bitcoind: {
         kind: 'running',
-        versionRange: '>=28.3:5',
+        versionRange: '>=28.4:13',
         healthChecks: ['bitcoind', 'sync-progress'],
       },
     }),
     ...(store?.lightningBackend?.type === 'lnd' && {
       lnd: {
         kind: 'running',
-        versionRange: '>=0.20.1-beta:3',
+        versionRange: '>=0.21.1-beta:0',
         healthChecks: ['sync-progress'],
       },
     }),

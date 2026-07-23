@@ -1,12 +1,15 @@
 import { FileHelper } from '@start9labs/start-sdk'
 import { manifest as bitcoinManifest } from 'bitcoin-core-startos/startos/manifest'
+import { rpcHostId, rpcPort } from 'bitcoin-core-startos/startos/utils'
 import { manifest as lndManifest } from 'lnd-startos/startos/manifest'
+import { gRPCHostId, gRPCPort } from 'lnd-startos/startos/interfaces'
 import { storeJson } from './fileModels/store'
 import { i18n } from './i18n'
 import { sdk } from './sdk'
 import {
   bitcoindCookiePath,
   bitcoindMountpoint,
+  bridgeAddress,
   irohPort,
   ldkPort,
   lndMacaroon,
@@ -85,7 +88,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
     })
   }
 
-  const gatewaydSubc = await sdk.SubContainer.of(
+  const gatewaydSubc = await sdk.SubContainer.eager(
     effects,
     { imageId: 'gatewayd' },
     mounts,
@@ -107,7 +110,17 @@ export const main = sdk.setupMain(async ({ effects }) => {
     if (sep < 0) {
       throw new Error(i18n('Bitcoind cookie is malformed'))
     }
-    env.FM_BITCOIND_URL = 'http://bitcoind.startos:8332'
+    const bitcoindAddr = await bridgeAddress(effects, {
+      packageId: 'bitcoind',
+      hostId: rpcHostId,
+      internalPort: rpcPort,
+    }).const()
+    if (!bitcoindAddr) {
+      throw new Error(
+        i18n('Bitcoin is not yet reachable on the internal network'),
+      )
+    }
+    env.FM_BITCOIND_URL = `http://${bitcoindAddr}`
     env.FM_BITCOIND_USERNAME = cookie.slice(0, sep)
     env.FM_BITCOIND_PASSWORD = cookie.slice(sep + 1)
   } else {
@@ -117,7 +130,15 @@ export const main = sdk.setupMain(async ({ effects }) => {
   let gatewayMode: 'ldk' | 'lnd'
   if (lightningBackend.type === 'lnd') {
     gatewayMode = 'lnd'
-    env.FM_LND_RPC_ADDR = 'https://lnd.startos:10009'
+    const lndAddr = await bridgeAddress(effects, {
+      packageId: 'lnd',
+      hostId: gRPCHostId,
+      internalPort: gRPCPort,
+    }).const()
+    if (!lndAddr) {
+      throw new Error(i18n('LND is not yet reachable on the internal network'))
+    }
+    env.FM_LND_RPC_ADDR = `https://${lndAddr}`
     env.FM_LND_TLS_CERT = lndTlsCert
     env.FM_LND_MACAROON = lndMacaroon
   } else {

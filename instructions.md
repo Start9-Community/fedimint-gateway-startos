@@ -11,7 +11,7 @@ Your choice of Lightning backend (integrated LDK vs. a local LND node) is perman
 - A **Gateway Interface** — the gatewayd dashboard and admin API, used to join federations, manage channels and balances, and view payment history.
 - An optional **LDK Peer Interface** — only exposed when you choose the integrated LDK backend; this is the port remote Lightning peers use to open inbound channels.
 - A choice of Lightning backend: **LDK** (an integrated Lightning node, no extra service needed) or **LND** (your existing LND service on StartOS).
-- A choice of Bitcoin backend: a **local Bitcoin Core node** (recommended, fully self-hosted) or a public **Esplora API** URL.
+- A choice of Bitcoin backend: a **local Bitcoin node** (recommended, fully self-hosted) or a public **Esplora API** URL.
 - A randomly generated admin password, shown to you once when you create it.
 
 ## Getting set up
@@ -25,7 +25,7 @@ After install, the gateway posts three critical tasks. Run them in this order:
 
    This choice is permanent for the lifetime of the install.
 3. **Choose your Bitcoin backend.** Run the *Bitcoin Configuration* task and pick either:
-   - **Local node (recommended)** — uses the Bitcoin Core service. Install **Bitcoin Core** first if you haven't already.
+   - **Local node (recommended)** — uses the Bitcoin service. Install **Bitcoin** first if you haven't already.
    - **Esplora** — paste a full Esplora API URL (defaults to `https://mempool.space/api`). Note that this leaks transaction-level metadata to the operator of that API.
 4. Start the service and open the **Gateway Interface** to log in with your admin password.
 
@@ -39,5 +39,5 @@ If you chose the LDK backend, open inbound channels by having peers connect to y
 
 ### Actions
 
-- **Bitcoin Configuration** — change the Bitcoin backend (between local Bitcoin Core and an Esplora URL, or update the Esplora URL itself). Safe to run at any time.
+- **Bitcoin Configuration** — change the Bitcoin backend (between local Bitcoin and an Esplora URL, or update the Esplora URL itself). Safe to run at any time.
 - **Reset Password** — generate a new random admin password. Use this if the current password is lost or you want to rotate it.
