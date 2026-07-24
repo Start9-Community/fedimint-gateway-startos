@@ -30,14 +30,14 @@ export const setDependencies = sdk.setupDependencies(async ({ effects }) => {
     ...(store?.bitcoinBackend?.type === 'bitcoind' && {
       bitcoind: {
         kind: 'running',
-        versionRange: '>=28.4:13',
+        versionRange: '>=28.4:14',
         healthChecks: ['bitcoind', 'sync-progress'],
       },
     }),
     ...(store?.lightningBackend?.type === 'lnd' && {
       lnd: {
         kind: 'running',
-        versionRange: '>=0.21.1-beta:0',
+        versionRange: '>=0.21.1-beta:4',
         healthChecks: ['sync-progress'],
       },
     }),
