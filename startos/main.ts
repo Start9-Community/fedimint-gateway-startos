@@ -9,7 +9,6 @@ import { sdk } from './sdk'
 import {
   bitcoindCookiePath,
   bitcoindMountpoint,
-  bridgeAddress,
   irohPort,
   ldkPort,
   lndMacaroon,
@@ -110,11 +109,14 @@ export const main = sdk.setupMain(async ({ effects }) => {
     if (sep < 0) {
       throw new Error(i18n('Bitcoind cookie is malformed'))
     }
-    const bitcoindAddr = await bridgeAddress(effects, {
-      packageId: 'bitcoind',
-      hostId: rpcHostId,
-      internalPort: rpcPort,
-    }).const()
+    const bitcoindAddr = await sdk.host
+      .getBridgeAddress(effects, {
+        packageId: 'bitcoind',
+        hostId: rpcHostId,
+        internalPort: rpcPort,
+        ssl: false,
+      })
+      .const()
     if (!bitcoindAddr) {
       throw new Error(
         i18n('Bitcoin is not yet reachable on the internal network'),
@@ -130,11 +132,13 @@ export const main = sdk.setupMain(async ({ effects }) => {
   let gatewayMode: 'ldk' | 'lnd'
   if (lightningBackend.type === 'lnd') {
     gatewayMode = 'lnd'
-    const lndAddr = await bridgeAddress(effects, {
-      packageId: 'lnd',
-      hostId: gRPCHostId,
-      internalPort: gRPCPort,
-    }).const()
+    const lndAddr = await sdk.host
+      .getBridgeAddress(effects, {
+        packageId: 'lnd',
+        hostId: gRPCHostId,
+        internalPort: gRPCPort,
+      })
+      .const()
     if (!lndAddr) {
       throw new Error(i18n('LND is not yet reachable on the internal network'))
     }
