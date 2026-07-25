@@ -1,5 +1,3 @@
-import { sdk } from './sdk'
-
 export const uiPort = 8176
 export const irohPort = 8177
 export const ldkPort = 10010
