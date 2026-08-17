@@ -6,15 +6,13 @@ Develop it inside a StartOS packaging workspace created by `start-cli s9pk init-
 which provides the packaging guide and agent context one level up. If you're reading this in a
 bare clone with no workspace, the full guide is at <https://docs.start9.com/packaging>.
 
-Work this package's `TODO.md` from top to bottom. Keep `README.md` (architecture, for developers and LLMs) and `instructions.md` (end-user docs) in sync with your changes.
+Work this package's `TODO.md` from top to bottom. Keep `README.md` (technical reference for an AI support or administering agent) and `instructions.md` (end-user docs) in sync with your changes.
 
 ## This repo
 
-- **Package id is `fedimint-gatewayd`.** The npm package name is `gatewayd-startos` and the repo is `fedimint-gateway-startos` — this three-way naming mismatch is intentional; don't "reconcile" it.
-- **Backends are user-selected and stored in `store.json`.** Bitcoin backend is either bitcoind or an external Esplora API; Lightning backend is either the integrated LDK node or an external LND. The `config-bitcoin` / `config-lightning` actions write the choice, which in turn drives the optional `bitcoind` / `lnd` dependencies and the daemon env in `main.ts`.
-- **bitcoind and lnd are reached over the LXC bridge, not `.startos` DNS.** `main.ts` resolves their RPC/gRPC addresses with `sdk.host.getBridgeAddress` using host ids imported from `bitcoin-core-startos/startos/utils` (`rpcHostId`) and `lnd-startos/startos/interfaces` (`gRPCHostId`) — never hardcode hostnames. Pass `ssl: false` for bitcoind's RPC, which publishes both a plaintext and a TLS bridge address; omit it for lnd's gRPC, which publishes one and would resolve `null` under `ssl: false`. Dependency package ids are `bitcoind` and `lnd`.
-- **Interfaces:** `ui` (dashboard + API) is always exported; `peer` (LDK p2p) is exported only when the LDK Lightning backend is selected.
-
-## Inspecting a running install
-
-To run a command inside the service's container (read its generated config, grep app logs), use `start-cli package attach fedimint-gatewayd -n gatewayd -- <cmd>`. Select the subcontainer by **name** with `-n` (the name passed to `SubContainer.of` in `main.ts` — here `gatewayd-sub`) or by image with `-i`. Note: `-s/--subcontainer` matches the internal **Guid**, not the name, so passing a name to `-s` fails with "no matching subcontainers".
+- **Three names, none of which match: the package id is `fedimint-gatewayd`, the npm package is `gatewayd-startos`, the repo is `fedimint-gateway-startos`.** Intentional — don't "reconcile" them.
+- **The backend fields must keep having no `.catch` default.** Dependencies are derived from them, so a default would make LND or Bitcoin appear as a dependency of a gateway the user has not configured yet, demanding they install something they may not want.
+- **`ssl: false` on bitcoind's RPC, and nothing on lnd's gRPC.** bitcoind's RPC binding publishes a plaintext _and_ a TLS bridge address; lnd's gRPC publishes one, and would resolve `null` under `ssl: false`. Host ids come from `bitcoin-core-startos/startos/utils` and `lnd-startos/startos/interfaces` — never hardcode a hostname.
+- **Throwing when an address or cookie does not resolve is deliberate.** A gateway that starts with a half-configured backend is worse than one that refuses to start and says which piece is missing.
+- **The Lightning backend is a `gatewayd` subcommand, not a config value** — hence `only-stopped` on that action. Switching it does not migrate channels.
+- **`peer` is exported only on the LDK backend.** On LND there is no local Lightning node to open channels against, so the interface would be an address that answers nothing.

@@ -18,13 +18,14 @@ Your choice of Lightning backend (integrated LDK vs. a local LND node) is perman
 
 After install, the gateway posts three critical tasks. Run them in this order:
 
-1. **Create your Gateway admin password.** Run the *Create Password* task. A strong random password is generated for you and shown once — save it to a password manager before dismissing.
-2. **Choose your Lightning backend.** Run the *Lightning Configuration* task and pick either:
-   - **LDK (Integrated)** — runs a Lightning node inside the gateway. Set the public node alias (default: *Fedimint LDK Gateway*).
+1. **Create your Gateway admin password.** Run the _Create Password_ task. A strong random password is generated for you and shown once — save it to a password manager before dismissing.
+2. **Choose your Lightning backend.** Run the _Lightning Configuration_ task and pick either:
+   - **LDK (Integrated)** — runs a Lightning node inside the gateway. Set the public node alias (default: _Fedimint LDK Gateway_).
    - **Local LND node** — uses the LND service from the StartOS marketplace. Install **LND** first if you haven't already.
 
    This choice is permanent for the lifetime of the install.
-3. **Choose your Bitcoin backend.** Run the *Bitcoin Configuration* task and pick either:
+
+3. **Choose your Bitcoin backend.** Run the _Bitcoin Configuration_ task and pick either:
    - **Local node (recommended)** — uses the Bitcoin service. Install **Bitcoin** first if you haven't already.
    - **Esplora** — paste a full Esplora API URL (defaults to `https://mempool.space/api`). Note that this leaks transaction-level metadata to the operator of that API.
 4. Start the service and open the **Gateway Interface** to log in with your admin password.
