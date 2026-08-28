@@ -1,23 +1,33 @@
 import { VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '0.11.1:6',
+  version: '0.12.0:0',
   releaseNotes: {
-    en_US: `Keeps the LND connection working when LND changes how it serves TLS.
+    en_US: `Major release with much faster Lightning payments.
 
-Fedimint Gateway resolved LND's address from a field that is only populated for one of the two ways a service can publish a port. It now reads the address itself, which is correct either way — so the connection survives LND's next update instead of going unreachable.`,
-    es_ES: `Mantiene la conexión con LND cuando LND cambia su forma de servir TLS.
+Fedimint 0.12.0 significantly reduces payment latency across the stack, so payments through your gateway complete noticeably faster. The gateway can now also sweep its on-chain wallet completely — correctly accounting for fees — and the UI gains editable channel fees, a total inbound/outbound liquidity overview, and manually connected peers that persist across restarts.
 
-Fedimint Gateway resolvía la dirección de LND a partir de un campo que solo se rellena en una de las dos formas en que un servicio puede publicar un puerto. Ahora lee la dirección en sí, que es correcta en ambos casos, así que la conexión sobrevive a la próxima actualización de LND en lugar de quedar inaccesible.`,
-    de_DE: `Hält die LND-Verbindung aufrecht, wenn LND die Art der TLS-Bereitstellung ändert.
+This release also includes the security hardening already shipped in the 0.11 line. It connects to federations on both current and previous releases, so no coordination with federations is required to upgrade.`,
+    es_ES: `Versión mayor con pagos Lightning mucho más rápidos.
 
-Fedimint Gateway ermittelte die Adresse von LND aus einem Feld, das nur bei einer der beiden Arten gefüllt ist, auf die ein Dienst einen Port veröffentlichen kann. Jetzt wird die Adresse selbst gelesen, die in beiden Fällen stimmt — die Verbindung übersteht damit das nächste LND-Update, statt unerreichbar zu werden.`,
-    pl_PL: `Utrzymuje połączenie z LND, gdy LND zmienia sposób udostępniania TLS.
+Fedimint 0.12.0 reduce significativamente la latencia de pago en toda la pila, por lo que los pagos a través de tu pasarela se completan notablemente más rápido. La pasarela ahora también puede vaciar por completo su monedero on-chain — contabilizando correctamente las tarifas — y la interfaz incorpora tarifas de canal editables, un resumen de la liquidez total entrante/saliente y pares conectados manualmente que persisten tras los reinicios.
 
-Fedimint Gateway ustalał adres LND na podstawie pola wypełnianego tylko przy jednym z dwóch sposobów publikowania portu przez usługę. Teraz odczytuje sam adres, poprawny w obu przypadkach — dzięki temu połączenie przetrwa kolejną aktualizację LND, zamiast stać się nieosiągalne.`,
-    fr_FR: `Maintient la connexion à LND lorsque LND change sa façon de servir TLS.
+Esta versión también incluye el refuerzo de seguridad ya distribuido en la línea 0.11. Se conecta a federaciones tanto en la versión actual como en las anteriores, así que no se requiere coordinación con las federaciones para actualizar.`,
+    de_DE: `Major-Release mit deutlich schnelleren Lightning-Zahlungen.
 
-Fedimint Gateway déterminait l'adresse de LND à partir d'un champ renseigné dans un seul des deux modes de publication d'un port par un service. Il lit désormais l'adresse elle-même, correcte dans les deux cas — la connexion survit donc à la prochaine mise à jour de LND au lieu de devenir injoignable.`,
+Fedimint 0.12.0 reduziert die Zahlungslatenz im gesamten Stack erheblich, sodass Zahlungen über dein Gateway spürbar schneller abgeschlossen werden. Das Gateway kann seine On-Chain-Wallet jetzt außerdem vollständig leeren — unter korrekter Berücksichtigung der Gebühren — und die Oberfläche erhält editierbare Kanalgebühren, eine Übersicht der gesamten ein- und ausgehenden Liquidität sowie manuell verbundene Peers, die Neustarts überdauern.
+
+Dieses Release enthält auch die bereits in der 0.11-Linie ausgelieferte Sicherheitshärtung. Es verbindet sich mit Föderationen auf aktuellen wie auf früheren Versionen, für das Upgrade ist also keine Koordination mit Föderationen nötig.`,
+    pl_PL: `Wydanie główne ze znacznie szybszymi płatnościami Lightning.
+
+Fedimint 0.12.0 znacząco zmniejsza opóźnienia płatności w całym stosie, dzięki czemu płatności przez twoją bramkę realizują się zauważalnie szybciej. Bramka może teraz także całkowicie opróżnić swój portfel on-chain — poprawnie uwzględniając opłaty — a interfejs zyskuje edytowalne opłaty kanałów, podgląd łącznej płynności przychodzącej/wychodzącej oraz ręcznie połączone węzły, które są zachowywane po restartach.
+
+To wydanie zawiera również wzmocnienia bezpieczeństwa dostarczone już w linii 0.11. Łączy się z federacjami zarówno na bieżącej, jak i na wcześniejszych wersjach, więc aktualizacja nie wymaga koordynacji z federacjami.`,
+    fr_FR: `Version majeure avec des paiements Lightning nettement plus rapides.
+
+Fedimint 0.12.0 réduit considérablement la latence des paiements sur l'ensemble de la pile, de sorte que les paiements via votre passerelle aboutissent sensiblement plus vite. La passerelle peut désormais aussi vider entièrement son portefeuille on-chain — en comptabilisant correctement les frais — et l'interface gagne des frais de canaux modifiables, une vue d'ensemble de la liquidité totale entrante/sortante et des pairs connectés manuellement qui persistent après redémarrage.
+
+Cette version inclut aussi le renforcement de sécurité déjà livré dans la ligne 0.11. Elle se connecte aux fédérations sur les versions actuelles comme antérieures, aucune coordination avec les fédérations n'est donc requise pour la mise à niveau.`,
   },
   migrations: {},
 })

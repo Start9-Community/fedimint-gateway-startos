@@ -1,4 +1,4 @@
-FROM fedimint/gatewayd:v0.11.1
+FROM fedimint/gatewayd:v0.12.0
 
 # Workaround 1: the upstream Nix-built image has /etc/passwd, /etc/group, and
 # /etc/nsswitch.conf as symlinks into the /nix/store. StartOS's SubContainer
