@@ -1,33 +1,33 @@
 import { VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '0.12.0:0',
+  version: '0.12.1:0',
   releaseNotes: {
-    en_US: `Major release with much faster Lightning payments.
+    en_US: `Security update: fixes a bug in the gateway's LNv1 Lightning payment handling.
 
-Fedimint 0.12.0 significantly reduces payment latency across the stack, so payments through your gateway complete noticeably faster. The gateway can now also sweep its on-chain wallet completely — correctly accounting for fees — and the UI gains editable channel fees, a total inbound/outbound liquidity overview, and manually connected peers that persist across restarts.
+Fedimint 0.12.1 fixes a bug in the gateway's LNv1 (legacy Lightning module) payment handling and adds further hardening to the LNv2 and LDK payment paths, including behaviour across restarts and transient Lightning-node failures. Gateway operators should update as soon as possible.
 
-This release also includes the security hardening already shipped in the 0.11 line. It connects to federations on both current and previous releases, so no coordination with federations is required to upgrade.`,
-    es_ES: `Versión mayor con pagos Lightning mucho más rápidos.
+No migration is required: there are no protocol or database changes, and the gateway keeps working with federations on both current and previous releases, so no coordination with federations is needed.`,
+    es_ES: `Actualización de seguridad: corrige un error en la gestión de pagos Lightning LNv1 de la pasarela.
 
-Fedimint 0.12.0 reduce significativamente la latencia de pago en toda la pila, por lo que los pagos a través de tu pasarela se completan notablemente más rápido. La pasarela ahora también puede vaciar por completo su monedero on-chain — contabilizando correctamente las tarifas — y la interfaz incorpora tarifas de canal editables, un resumen de la liquidez total entrante/saliente y pares conectados manualmente que persisten tras los reinicios.
+Fedimint 0.12.1 corrige un error en la gestión de pagos LNv1 (módulo Lightning heredado) de la pasarela y añade más refuerzos a las rutas de pago LNv2 y LDK, incluido el comportamiento tras reinicios y fallos transitorios del nodo Lightning. Los operadores de pasarelas deben actualizar lo antes posible.
 
-Esta versión también incluye el refuerzo de seguridad ya distribuido en la línea 0.11. Se conecta a federaciones tanto en la versión actual como en las anteriores, así que no se requiere coordinación con las federaciones para actualizar.`,
-    de_DE: `Major-Release mit deutlich schnelleren Lightning-Zahlungen.
+No se requiere migración: no hay cambios de protocolo ni de base de datos, y la pasarela sigue funcionando con federaciones tanto en la versión actual como en las anteriores, así que no es necesaria ninguna coordinación con las federaciones.`,
+    de_DE: `Sicherheitsupdate: behebt einen Fehler in der LNv1-Lightning-Zahlungsabwicklung des Gateways.
 
-Fedimint 0.12.0 reduziert die Zahlungslatenz im gesamten Stack erheblich, sodass Zahlungen über dein Gateway spürbar schneller abgeschlossen werden. Das Gateway kann seine On-Chain-Wallet jetzt außerdem vollständig leeren — unter korrekter Berücksichtigung der Gebühren — und die Oberfläche erhält editierbare Kanalgebühren, eine Übersicht der gesamten ein- und ausgehenden Liquidität sowie manuell verbundene Peers, die Neustarts überdauern.
+Fedimint 0.12.1 behebt einen Fehler in der LNv1-Zahlungsabwicklung (altes Lightning-Modul) des Gateways und härtet zusätzlich die LNv2- und LDK-Zahlungspfade, einschließlich des Verhaltens bei Neustarts und vorübergehenden Ausfällen des Lightning-Nodes. Gateway-Betreiber sollten so bald wie möglich aktualisieren.
 
-Dieses Release enthält auch die bereits in der 0.11-Linie ausgelieferte Sicherheitshärtung. Es verbindet sich mit Föderationen auf aktuellen wie auf früheren Versionen, für das Upgrade ist also keine Koordination mit Föderationen nötig.`,
-    pl_PL: `Wydanie główne ze znacznie szybszymi płatnościami Lightning.
+Eine Migration ist nicht nötig: Es gibt keine Protokoll- oder Datenbankänderungen, und das Gateway arbeitet weiterhin mit Föderationen auf aktuellen wie auf früheren Versionen, sodass keine Koordination mit Föderationen erforderlich ist.`,
+    pl_PL: `Aktualizacja bezpieczeństwa: naprawia błąd w obsłudze płatności Lightning LNv1 przez bramkę.
 
-Fedimint 0.12.0 znacząco zmniejsza opóźnienia płatności w całym stosie, dzięki czemu płatności przez twoją bramkę realizują się zauważalnie szybciej. Bramka może teraz także całkowicie opróżnić swój portfel on-chain — poprawnie uwzględniając opłaty — a interfejs zyskuje edytowalne opłaty kanałów, podgląd łącznej płynności przychodzącej/wychodzącej oraz ręcznie połączone węzły, które są zachowywane po restartach.
+Fedimint 0.12.1 naprawia błąd w obsłudze płatności LNv1 (starszy moduł Lightning) przez bramkę i dodatkowo wzmacnia ścieżki płatności LNv2 i LDK, w tym zachowanie po restartach i przejściowych awariach węzła Lightning. Operatorzy bramek powinni zaktualizować jak najszybciej.
 
-To wydanie zawiera również wzmocnienia bezpieczeństwa dostarczone już w linii 0.11. Łączy się z federacjami zarówno na bieżącej, jak i na wcześniejszych wersjach, więc aktualizacja nie wymaga koordynacji z federacjami.`,
-    fr_FR: `Version majeure avec des paiements Lightning nettement plus rapides.
+Migracja nie jest wymagana: nie ma zmian w protokole ani w bazie danych, a bramka nadal współpracuje z federacjami zarówno na bieżącej, jak i na wcześniejszych wersjach, więc koordynacja z federacjami nie jest potrzebna.`,
+    fr_FR: `Mise à jour de sécurité : corrige un bug dans le traitement des paiements Lightning LNv1 de la passerelle.
 
-Fedimint 0.12.0 réduit considérablement la latence des paiements sur l'ensemble de la pile, de sorte que les paiements via votre passerelle aboutissent sensiblement plus vite. La passerelle peut désormais aussi vider entièrement son portefeuille on-chain — en comptabilisant correctement les frais — et l'interface gagne des frais de canaux modifiables, une vue d'ensemble de la liquidité totale entrante/sortante et des pairs connectés manuellement qui persistent après redémarrage.
+Fedimint 0.12.1 corrige un bug dans le traitement des paiements LNv1 (ancien module Lightning) de la passerelle et renforce en plus les chemins de paiement LNv2 et LDK, y compris le comportement lors des redémarrages et des pannes transitoires du nœud Lightning. Les opérateurs de passerelles doivent mettre à jour dès que possible.
 
-Cette version inclut aussi le renforcement de sécurité déjà livré dans la ligne 0.11. Elle se connecte aux fédérations sur les versions actuelles comme antérieures, aucune coordination avec les fédérations n'est donc requise pour la mise à niveau.`,
+Aucune migration n'est requise : il n'y a pas de changement de protocole ni de base de données, et la passerelle continue de fonctionner avec les fédérations sur les versions actuelles comme antérieures, aucune coordination avec les fédérations n'est donc nécessaire.`,
   },
   migrations: {},
 })
