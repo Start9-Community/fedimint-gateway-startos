@@ -1,33 +1,23 @@
 import { VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '0.12.1:0',
+  version: '0.12.1:1',
   releaseNotes: {
-    en_US: `Security update: fixes a bug in the gateway's LNv1 Lightning payment handling.
+    en_US: `The Lightning and Bitcoin backends selected during setup are now saved as chosen.
 
-Fedimint 0.12.1 fixes a bug in the gateway's LNv1 (legacy Lightning module) payment handling and adds further hardening to the LNv2 and LDK payment paths, including behaviour across restarts and transient Lightning-node failures. Gateway operators should update as soon as possible.
+If you selected Local LND node but the gateway started its integrated LDK node, and that LDK node holds no funds or channels, uninstall the gateway, install this version, and select Local LND node again. If you selected an Esplora server, run Bitcoin Configuration again.`,
+    es_ES: `Los backends de Lightning y Bitcoin seleccionados durante la configuración ahora se guardan tal como se eligieron.
 
-No migration is required: there are no protocol or database changes, and the gateway keeps working with federations on both current and previous releases, so no coordination with federations is needed.`,
-    es_ES: `Actualización de seguridad: corrige un error en la gestión de pagos Lightning LNv1 de la pasarela.
+Si seleccionaste Nodo LND local pero la pasarela inició su nodo LDK integrado, y ese nodo LDK no tiene fondos ni canales, desinstala la pasarela, instala esta versión y vuelve a seleccionar Nodo LND local. Si seleccionaste un servidor Esplora, vuelve a ejecutar Configuración de Bitcoin.`,
+    de_DE: `Die bei der Einrichtung gewählten Lightning- und Bitcoin-Backends werden jetzt wie gewählt gespeichert.
 
-Fedimint 0.12.1 corrige un error en la gestión de pagos LNv1 (módulo Lightning heredado) de la pasarela y añade más refuerzos a las rutas de pago LNv2 y LDK, incluido el comportamiento tras reinicios y fallos transitorios del nodo Lightning. Los operadores de pasarelas deben actualizar lo antes posible.
+Wenn du Lokaler LND-Knoten gewählt hast, das Gateway aber seinen integrierten LDK-Node gestartet hat, und dieser LDK-Node weder Guthaben noch Kanäle hat, deinstalliere das Gateway, installiere diese Version und wähle erneut Lokaler LND-Knoten. Wenn du einen Esplora-Server gewählt hast, führe Bitcoin-Konfiguration erneut aus.`,
+    pl_PL: `Backendy Lightning i Bitcoin wybrane podczas konfiguracji są teraz zapisywane zgodnie z wyborem.
 
-No se requiere migración: no hay cambios de protocolo ni de base de datos, y la pasarela sigue funcionando con federaciones tanto en la versión actual como en las anteriores, así que no es necesaria ninguna coordinación con las federaciones.`,
-    de_DE: `Sicherheitsupdate: behebt einen Fehler in der LNv1-Lightning-Zahlungsabwicklung des Gateways.
+Jeśli wybrano Lokalny węzeł LND, a bramka uruchomiła zintegrowany węzeł LDK, który nie ma środków ani kanałów, odinstaluj bramkę, zainstaluj tę wersję i ponownie wybierz Lokalny węzeł LND. Jeśli wybrano serwer Esplora, uruchom ponownie akcję Konfiguracja Bitcoin.`,
+    fr_FR: `Les backends Lightning et Bitcoin sélectionnés lors de la configuration sont désormais enregistrés tels que choisis.
 
-Fedimint 0.12.1 behebt einen Fehler in der LNv1-Zahlungsabwicklung (altes Lightning-Modul) des Gateways und härtet zusätzlich die LNv2- und LDK-Zahlungspfade, einschließlich des Verhaltens bei Neustarts und vorübergehenden Ausfällen des Lightning-Nodes. Gateway-Betreiber sollten so bald wie möglich aktualisieren.
-
-Eine Migration ist nicht nötig: Es gibt keine Protokoll- oder Datenbankänderungen, und das Gateway arbeitet weiterhin mit Föderationen auf aktuellen wie auf früheren Versionen, sodass keine Koordination mit Föderationen erforderlich ist.`,
-    pl_PL: `Aktualizacja bezpieczeństwa: naprawia błąd w obsłudze płatności Lightning LNv1 przez bramkę.
-
-Fedimint 0.12.1 naprawia błąd w obsłudze płatności LNv1 (starszy moduł Lightning) przez bramkę i dodatkowo wzmacnia ścieżki płatności LNv2 i LDK, w tym zachowanie po restartach i przejściowych awariach węzła Lightning. Operatorzy bramek powinni zaktualizować jak najszybciej.
-
-Migracja nie jest wymagana: nie ma zmian w protokole ani w bazie danych, a bramka nadal współpracuje z federacjami zarówno na bieżącej, jak i na wcześniejszych wersjach, więc koordynacja z federacjami nie jest potrzebna.`,
-    fr_FR: `Mise à jour de sécurité : corrige un bug dans le traitement des paiements Lightning LNv1 de la passerelle.
-
-Fedimint 0.12.1 corrige un bug dans le traitement des paiements LNv1 (ancien module Lightning) de la passerelle et renforce en plus les chemins de paiement LNv2 et LDK, y compris le comportement lors des redémarrages et des pannes transitoires du nœud Lightning. Les opérateurs de passerelles doivent mettre à jour dès que possible.
-
-Aucune migration n'est requise : il n'y a pas de changement de protocole ni de base de données, et la passerelle continue de fonctionner avec les fédérations sur les versions actuelles comme antérieures, aucune coordination avec les fédérations n'est donc nécessaire.`,
+Si vous avez sélectionné Nœud LND local mais que la passerelle a démarré son nœud LDK intégré, et que ce nœud LDK ne détient ni fonds ni canaux, désinstallez la passerelle, installez cette version et sélectionnez à nouveau Nœud LND local. Si vous avez sélectionné un serveur Esplora, relancez Configuration Bitcoin.`,
   },
   migrations: {},
 })

@@ -4,12 +4,12 @@ import { DEFAULT_LDK_ALIAS } from '../utils'
 import { z } from 'zod'
 
 const ldkVariant = z.object({
-  type: z.literal('ldk').catch('ldk' as const),
+  type: z.literal('ldk'),
   alias: z.string().catch(DEFAULT_LDK_ALIAS),
 })
 
 const lndVariant = z.object({
-  type: z.literal('lnd').catch('lnd' as const),
+  type: z.literal('lnd'),
 })
 
 // Intentionally no `.catch` default: backends stay undefined until the user
@@ -20,11 +20,11 @@ const lightningBackend = z
   .optional()
 
 const bitcoindVariant = z.object({
-  type: z.literal('bitcoind').catch('bitcoind' as const),
+  type: z.literal('bitcoind'),
 })
 
 const esploraVariant = z.object({
-  type: z.literal('esplora').catch('esplora' as const),
+  type: z.literal('esplora'),
   url: z.string().catch('https://mempool.space/api'),
 })
 
