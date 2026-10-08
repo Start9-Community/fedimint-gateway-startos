@@ -1,14 +1,13 @@
-import { FileHelper } from '@start9labs/start-sdk'
+import { FileHelper, z } from '@start9labs/start-sdk'
 import { sdk } from '../sdk'
 import { DEFAULT_LDK_ALIAS } from '../utils'
-import { z } from 'zod'
 
-const ldkVariant = z.object({
+const ldkVariant = z.looseObject({
   type: z.literal('ldk'),
   alias: z.string().catch(DEFAULT_LDK_ALIAS),
 })
 
-const lndVariant = z.object({
+const lndVariant = z.looseObject({
   type: z.literal('lnd'),
 })
 
@@ -19,11 +18,11 @@ const lightningBackend = z
   .discriminatedUnion('type', [ldkVariant, lndVariant])
   .optional()
 
-const bitcoindVariant = z.object({
+const bitcoindVariant = z.looseObject({
   type: z.literal('bitcoind'),
 })
 
-const esploraVariant = z.object({
+const esploraVariant = z.looseObject({
   type: z.literal('esplora'),
   url: z.string().catch('https://mempool.space/api'),
 })
@@ -32,7 +31,7 @@ const bitcoinBackend = z
   .discriminatedUnion('type', [bitcoindVariant, esploraVariant])
   .optional()
 
-const shape = z.object({
+const shape = z.looseObject({
   lightningBackend,
   bitcoinBackend,
   passwordHash: z.string().nullable().catch(null),

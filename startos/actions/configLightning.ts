@@ -8,8 +8,10 @@ const { InputSpec, Value, Variants } = sdk
 const inputSpec = InputSpec.of({
   lightningBackend: Value.union({
     name: i18n('Lightning Backend'),
-    description: i18n('Choose which Lightning implementation to use'),
-    default: 'ldk',
+    description: i18n(
+      '- LDK (Integrated): runs a Lightning node inside the gateway, with its own channels, funds and peer address. Nothing else to install.\n- Local LND node: uses the LND service on this server, which must be installed. Channels and funds are managed in LND.',
+    ),
+    default: null,
     variants: Variants.of({
       ldk: {
         name: i18n('LDK (Integrated)'),
@@ -17,7 +19,7 @@ const inputSpec = InputSpec.of({
           alias: Value.text({
             name: i18n('Node Alias'),
             description: i18n(
-              'Public alias for the integrated LDK Lightning node',
+              "The name other Lightning nodes see for the gateway's integrated node.",
             ),
             required: true,
             default: DEFAULT_LDK_ALIAS,
@@ -42,7 +44,9 @@ export const configLightning = sdk.Action.withInput(
   'config-lightning',
   async ({ effects }) => ({
     name: i18n('Lightning Configuration'),
-    description: i18n("Configure the Gateway's Lightning backend"),
+    description: i18n(
+      'Choose whether the gateway runs its own Lightning node or uses LND on this server.',
+    ),
     warning: i18n(
       'This cannot be changed later. Switching Lightning backend orphans any existing channels and federation registrations.',
     ),
@@ -52,17 +56,17 @@ export const configLightning = sdk.Action.withInput(
   }),
   inputSpec,
   async ({ effects }) => {
-    const store = await storeJson.read().once()
-    if (!store) return undefined
+    const lightningBackend = await storeJson
+      .read((s) => s.lightningBackend)
+      .once()
+    if (!lightningBackend) return undefined
     return {
       lightningBackend:
-        store.lightningBackend?.type === 'lnd'
+        lightningBackend.type === 'lnd'
           ? { selection: 'lnd' as const, value: {} }
           : {
               selection: 'ldk' as const,
-              value: {
-                alias: store.lightningBackend?.alias ?? DEFAULT_LDK_ALIAS,
-              },
+              value: { alias: lightningBackend.alias ?? DEFAULT_LDK_ALIAS },
             },
     }
   },

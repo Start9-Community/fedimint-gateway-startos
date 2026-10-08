@@ -18,17 +18,23 @@ Freshly scaffolded? Work the
 guide page, not a file in this repo — read it, don't copy it in.
 
 Keep `README.md` (technical reference for an AI support or administering agent) and
-`instructions.md` (end-user docs) in sync with your changes.
+`instructions.md` (end-user docs) in sync with your changes. This file restates neither:
+whoever changes the package has both, so it carries only what they don't — repo mechanics,
+a change that looks right and is not, where the next thing gets added, a naming trap, a
+build or test invocation particular to this repo.
 
-**Bugs and feature requests are GitHub issues on this repo** — file them as you find them.
+**Fix a defect you spot rather than reporting it** — you have the package open and the
+context to be sure. File **a GitHub issue on this repo** only when the call isn't yours to
+make: you can't pin the cause down, two defensible fixes exist, or it's too large to ride on
+the work in hand. An open issue is a report, not a queue — implement one when you're asked
+to or when it's labelled `Approved`, then close it with `Closes #<n>`.
+
 Don't record work in the repo instead: no `TODO.md`, no `NOTES.md`, no `PLAN.md`. What you
 verified, tried, and decided belongs in the commit message and the PR body.
 
 ## This repo
 
-- **Three names, none of which match: the package id is `fedimint-gatewayd`, the npm package is `gatewayd-startos`, the repo is `fedimint-gateway-startos`.** Intentional — don't "reconcile" them.
-- **The backend fields must keep having no `.catch` default.** Dependencies are derived from them, so a default would make LND or Bitcoin appear as a dependency of a gateway the user has not configured yet, demanding they install something they may not want.
-- **`ssl: false` on bitcoind's RPC, and nothing on lnd's gRPC.** bitcoind's RPC binding publishes a plaintext _and_ a TLS bridge address; lnd's gRPC publishes one, and would resolve `null` under `ssl: false`. Host ids come from `bitcoin-core-startos/startos/utils` and `lnd-startos/startos/interfaces` — never hardcode a hostname.
-- **Throwing when an address or cookie does not resolve is deliberate.** A gateway that starts with a half-configured backend is worse than one that refuses to start and says which piece is missing.
-- **The Lightning backend is a `gatewayd` subcommand, not a config value** — hence `only-stopped` on that action. Switching it does not migrate channels.
-- **`peer` is exported only on the LDK backend.** On LND there is no local Lightning node to open channels against, so the interface would be an address that answers nothing.
+- **The package id is `fedimint-gatewayd` and the repo is `fedimint-gateway-startos`** — intentional; don't reconcile them.
+- **Keep the store's backend fields free of a `.catch` default** — the dependencies' `enabled` reads them, so a default would list LND or Bitcoin before the user chose either.
+- **Keep `ssl: false` on bitcoind's RPC bridge lookup and no `ssl` on LND's gRPC lookup** — LND's gRPC publishes only a TLS address, which `ssl: false` resolves to `null`.
+- **Keep `main` throwing when a backend address or the cookie doesn't resolve** — a gateway started against a half-configured backend is worse than one that refuses.

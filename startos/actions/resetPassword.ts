@@ -14,10 +14,12 @@ export const resetPassword = sdk.Action.withoutInput(
 
     return {
       name: hasPass ? i18n('Reset Password') : i18n('Create Password'),
-      description: hasPass
-        ? i18n('Reset your Gateway admin password')
-        : i18n('Create your Gateway admin password'),
-      warning: null,
+      description: i18n(
+        'Generates a random admin password for the Gateway Interface and shows it once.',
+      ),
+      warning: hasPass
+        ? i18n('The current admin password is replaced and stops working.')
+        : null,
       allowedStatuses: 'only-stopped',
       group: null,
       visibility: 'enabled',

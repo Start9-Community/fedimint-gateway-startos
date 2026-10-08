@@ -152,11 +152,11 @@ Sets the gateway's admin password.
 
 - **When to run it:** **only while stopped** — the hash is read into the daemon's environment at start.
 - **What it changes:** the stored hash. Only a bcrypt hash is kept; the plaintext is not.
-- **Repeat safety:** each run replaces the password.
+- **Repeat safety:** each run replaces the password; once one exists, the action asks for confirmation before running.
 
 ## Tasks
 
-Three, all `critical`.
+Four, all `critical`.
 
 | Task                     | Severity   | Raised when                           | Cleared when       |
 | ------------------------ | ---------- | ------------------------------------- | ------------------ |

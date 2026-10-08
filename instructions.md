@@ -41,4 +41,4 @@ If you chose the LDK backend, open inbound channels by having peers connect to y
 ### Actions
 
 - **Bitcoin Configuration** — change the Bitcoin backend (between local Bitcoin and an Esplora URL, or update the Esplora URL itself). Safe to run at any time.
-- **Reset Password** — generate a new random admin password. Use this if the current password is lost or you want to rotate it.
+- **Reset Password** — generate a new random admin password. Use this if the current password is lost or you want to rotate it. It asks for confirmation first, since the current password stops working.

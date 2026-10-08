@@ -1,23 +1,28 @@
 import { VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '0.12.1:1',
+  version: '0.12.1:2',
   releaseNotes: {
-    en_US: `The Lightning and Bitcoin backends selected during setup are now saved as chosen.
-
-If you selected Local LND node but the gateway started its integrated LDK node, and that LDK node holds no funds or channels, uninstall the gateway, install this version, and select Local LND node again. If you selected an Esplora server, run Bitcoin Configuration again.`,
-    es_ES: `Los backends de Lightning y Bitcoin seleccionados durante la configuración ahora se guardan tal como se eligieron.
-
-Si seleccionaste Nodo LND local pero la pasarela inició su nodo LDK integrado, y ese nodo LDK no tiene fondos ni canales, desinstala la pasarela, instala esta versión y vuelve a seleccionar Nodo LND local. Si seleccionaste un servidor Esplora, vuelve a ejecutar Configuración de Bitcoin.`,
-    de_DE: `Die bei der Einrichtung gewählten Lightning- und Bitcoin-Backends werden jetzt wie gewählt gespeichert.
-
-Wenn du Lokaler LND-Knoten gewählt hast, das Gateway aber seinen integrierten LDK-Node gestartet hat, und dieser LDK-Node weder Guthaben noch Kanäle hat, deinstalliere das Gateway, installiere diese Version und wähle erneut Lokaler LND-Knoten. Wenn du einen Esplora-Server gewählt hast, führe Bitcoin-Konfiguration erneut aus.`,
-    pl_PL: `Backendy Lightning i Bitcoin wybrane podczas konfiguracji są teraz zapisywane zgodnie z wyborem.
-
-Jeśli wybrano Lokalny węzeł LND, a bramka uruchomiła zintegrowany węzeł LDK, który nie ma środków ani kanałów, odinstaluj bramkę, zainstaluj tę wersję i ponownie wybierz Lokalny węzeł LND. Jeśli wybrano serwer Esplora, uruchom ponownie akcję Konfiguracja Bitcoin.`,
-    fr_FR: `Les backends Lightning et Bitcoin sélectionnés lors de la configuration sont désormais enregistrés tels que choisis.
-
-Si vous avez sélectionné Nœud LND local mais que la passerelle a démarré son nœud LDK intégré, et que ce nœud LDK ne détient ni fonds ni canaux, désinstallez la passerelle, installez cette version et sélectionnez à nouveau Nœud LND local. Si vous avez sélectionné un serveur Esplora, relancez Configuration Bitcoin.`,
+    en_US: `- Reset Password asks for confirmation before replacing an existing password.
+- Bitcoin Configuration explains what each backend means for the gateway.
+- Lightning Configuration no longer preselects a backend, since the choice cannot be changed later.
+- Bitcoin must be at least 28.4:30, 29.4:17, 30.3:17 or 31.1:19, depending on its major version. Bitcoin Knots (pre-RDTS) 29.3:29 or later also works.`,
+    es_ES: `- Restablecer contraseña pide confirmación antes de reemplazar una contraseña existente.
+- Configuración de Bitcoin explica qué implica cada backend para la pasarela.
+- Configuración de Lightning ya no preselecciona un backend, ya que la elección no se puede cambiar después.
+- Bitcoin debe ser al menos la versión 28.4:30, 29.4:17, 30.3:17 o 31.1:19, según su versión principal. También funciona Bitcoin Knots (pre-RDTS) 29.3:29 o posterior.`,
+    de_DE: `- Passwort zurücksetzen fragt nach einer Bestätigung, bevor ein vorhandenes Passwort ersetzt wird.
+- Bitcoin-Konfiguration erklärt, was jedes Backend für das Gateway bedeutet.
+- Lightning-Konfiguration wählt kein Backend mehr vor, da die Wahl später nicht geändert werden kann.
+- Bitcoin muss je nach Hauptversion mindestens 28.4:30, 29.4:17, 30.3:17 oder 31.1:19 sein. Bitcoin Knots (pre-RDTS) ab 29.3:29 funktioniert ebenfalls.`,
+    pl_PL: `- Zresetuj hasło prosi o potwierdzenie przed zastąpieniem istniejącego hasła.
+- Konfiguracja Bitcoin wyjaśnia, co każdy backend oznacza dla bramki.
+- Konfiguracja Lightning nie zaznacza już domyślnie backendu, ponieważ wyboru nie można później zmienić.
+- Bitcoin musi być co najmniej w wersji 28.4:30, 29.4:17, 30.3:17 lub 31.1:19, zależnie od wersji głównej. Działa też Bitcoin Knots (pre-RDTS) 29.3:29 lub nowszy.`,
+    fr_FR: `- Réinitialiser le mot de passe demande une confirmation avant de remplacer un mot de passe existant.
+- Configuration Bitcoin explique ce que chaque backend implique pour la passerelle.
+- Configuration Lightning ne présélectionne plus de backend, car ce choix ne peut pas être modifié ultérieurement.
+- Bitcoin doit être au moins en version 28.4:30, 29.4:17, 30.3:17 ou 31.1:19, selon sa version majeure. Bitcoin Knots (pre-RDTS) 29.3:29 ou plus récent fonctionne aussi.`,
   },
   migrations: {},
 })
