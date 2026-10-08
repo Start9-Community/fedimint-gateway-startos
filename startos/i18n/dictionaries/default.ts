@@ -14,21 +14,21 @@ const dict = {
 
   // actions/configLightning.ts, actions/configBitcoin.ts
   'Lightning Backend': 9,
-  'Choose which Lightning implementation to use': 10,
+  '- LDK (Integrated): runs a Lightning node inside the gateway, with its own channels, funds and peer address. Nothing else to install.\n- Local LND node: uses the LND service on this server, which must be installed. Channels and funds are managed in LND.': 10,
   'LDK (Integrated)': 11,
   'Node Alias': 13,
-  'Public alias for the integrated LDK Lightning node': 14,
+  "The name other Lightning nodes see for the gateway's integrated node.": 14,
   'Bitcoin Backend': 15,
-  'Choose how the Gateway connects to the Bitcoin network': 16,
+  "- Local node: uses Bitcoin on this server, which must be installed and fully synced. The gateway's queries stay on this server.\n- Esplora: uses an Esplora API on the internet, with nothing else to install. Its operator sees the gateway's queries, which reveal its on-chain activity.": 16,
   'Local node (recommended)': 17,
   Esplora: 18,
   'Esplora API URL': 19,
-  'The URL of the Esplora API to use': 20,
+  "The Esplora API's base URL, including its path, such as https://mempool.space/api.": 20,
 
   // actions/resetPassword.ts, init/taskSetPassword.ts
   'Reset Password': 24,
   'Create Password': 25,
-  'Reset your Gateway admin password': 26,
+  'Generates a random admin password for the Gateway Interface and shows it once.': 26,
   'Create your Gateway admin password': 27,
   Success: 28,
   'Your new password is below': 29,
@@ -48,9 +48,9 @@ const dict = {
 
   // actions/configLightning.ts, actions/configBitcoin.ts
   'Lightning Configuration': 39,
-  "Configure the Gateway's Lightning backend": 40,
+  'Choose whether the gateway runs its own Lightning node or uses LND on this server.': 40,
   'Bitcoin Configuration': 41,
-  "Configure the Gateway's Bitcoin backend": 42,
+  'Choose where the gateway gets its Bitcoin data. Saving a change restarts a running gateway.': 42,
   'This cannot be changed later. Switching Lightning backend orphans any existing channels and federation registrations.': 43,
 
   // init/tasksOnInstall.ts
@@ -69,6 +69,7 @@ const dict = {
   // main.ts (dependency reachability over the internal bridge)
   'Bitcoin is not yet reachable on the internal network': 49,
   'LND is not yet reachable on the internal network': 50,
+  'The current admin password is replaced and stops working.': 51,
 } as const
 
 /**
