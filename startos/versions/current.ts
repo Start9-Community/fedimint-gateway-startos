@@ -1,28 +1,18 @@
 import { VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '0.12.1:2',
+  version: '0.12.2:0',
   releaseNotes: {
-    en_US: `- Reset Password asks for confirmation before replacing an existing password.
-- Bitcoin Configuration explains what each backend means for the gateway.
-- Lightning Configuration no longer preselects a backend, since the choice cannot be changed later.
-- Bitcoin must be at least 28.4:30, 29.4:17, 30.3:17 or 31.1:19, depending on its major version. Bitcoin Knots (pre-RDTS) 29.3:29 or later also works.`,
-    es_ES: `- Restablecer contraseña pide confirmación antes de reemplazar una contraseña existente.
-- Configuración de Bitcoin explica qué implica cada backend para la pasarela.
-- Configuración de Lightning ya no preselecciona un backend, ya que la elección no se puede cambiar después.
-- Bitcoin debe ser al menos la versión 28.4:30, 29.4:17, 30.3:17 o 31.1:19, según su versión principal. También funciona Bitcoin Knots (pre-RDTS) 29.3:29 o posterior.`,
-    de_DE: `- Passwort zurücksetzen fragt nach einer Bestätigung, bevor ein vorhandenes Passwort ersetzt wird.
-- Bitcoin-Konfiguration erklärt, was jedes Backend für das Gateway bedeutet.
-- Lightning-Konfiguration wählt kein Backend mehr vor, da die Wahl später nicht geändert werden kann.
-- Bitcoin muss je nach Hauptversion mindestens 28.4:30, 29.4:17, 30.3:17 oder 31.1:19 sein. Bitcoin Knots (pre-RDTS) ab 29.3:29 funktioniert ebenfalls.`,
-    pl_PL: `- Zresetuj hasło prosi o potwierdzenie przed zastąpieniem istniejącego hasła.
-- Konfiguracja Bitcoin wyjaśnia, co każdy backend oznacza dla bramki.
-- Konfiguracja Lightning nie zaznacza już domyślnie backendu, ponieważ wyboru nie można później zmienić.
-- Bitcoin musi być co najmniej w wersji 28.4:30, 29.4:17, 30.3:17 lub 31.1:19, zależnie od wersji głównej. Działa też Bitcoin Knots (pre-RDTS) 29.3:29 lub nowszy.`,
-    fr_FR: `- Réinitialiser le mot de passe demande une confirmation avant de remplacer un mot de passe existant.
-- Configuration Bitcoin explique ce que chaque backend implique pour la passerelle.
-- Configuration Lightning ne présélectionne plus de backend, car ce choix ne peut pas être modifié ultérieurement.
-- Bitcoin doit être au moins en version 28.4:30, 29.4:17, 30.3:17 ou 31.1:19, selon sa version majeure. Bitcoin Knots (pre-RDTS) 29.3:29 ou plus récent fonctionne aussi.`,
+    en_US:
+      'Updated Fedimint to 0.12.2, a security release that fixes a bug in LNv2 payment handling that could cause the gateway to lose funds, and hardens its Lightning payment paths. Full notes: https://github.com/fedimint/fedimint/releases/tag/v0.12.2',
+    es_ES:
+      'Fedimint actualizado a 0.12.2, una versión de seguridad que corrige un error en el manejo de pagos LNv2 que podía hacer que la pasarela perdiera fondos, y refuerza sus rutas de pago Lightning. Notas completas: https://github.com/fedimint/fedimint/releases/tag/v0.12.2',
+    de_DE:
+      'Fedimint auf 0.12.2 aktualisiert, ein Sicherheitsrelease, das einen Fehler in der LNv2-Zahlungsverarbeitung behebt, durch den das Gateway Guthaben verlieren konnte, und seine Lightning-Zahlungswege härtet. Vollständige Versionshinweise: https://github.com/fedimint/fedimint/releases/tag/v0.12.2',
+    pl_PL:
+      'Zaktualizowano Fedimint do 0.12.2, wydania bezpieczeństwa, które naprawia błąd w obsłudze płatności LNv2 mogący spowodować utratę środków przez bramkę, oraz wzmacnia jej ścieżki płatności Lightning. Pełne informacje o wydaniu: https://github.com/fedimint/fedimint/releases/tag/v0.12.2',
+    fr_FR:
+      'Fedimint mis à jour vers 0.12.2, une version de sécurité qui corrige un bogue dans le traitement des paiements LNv2 pouvant faire perdre des fonds à la passerelle, et renforce ses chemins de paiement Lightning. Notes complètes : https://github.com/fedimint/fedimint/releases/tag/v0.12.2',
   },
   migrations: {},
 })
