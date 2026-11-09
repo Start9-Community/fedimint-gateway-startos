@@ -1,18 +1,18 @@
 import { VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '0.12.2:0',
+  version: '0.12.2:1',
   releaseNotes: {
     en_US:
-      'Updated Fedimint to 0.12.2, a security release that fixes a bug in LNv2 payment handling that could cause the gateway to lose funds, and hardens its Lightning payment paths. Full notes: https://github.com/fedimint/fedimint/releases/tag/v0.12.2',
+      "Requires StartOS 0.4.1 or later. With LND as its Lightning backend, the gateway now reads only LND's TLS certificate and admin macaroon, and can no longer read LND's seed or other files. Requires LND 0.21.6-beta:3 or later.",
     es_ES:
-      'Fedimint actualizado a 0.12.2, una versión de seguridad que corrige un error en el manejo de pagos LNv2 que podía hacer que la pasarela perdiera fondos, y refuerza sus rutas de pago Lightning. Notas completas: https://github.com/fedimint/fedimint/releases/tag/v0.12.2',
+      'Requiere StartOS 0.4.1 o posterior. Con LND como backend Lightning, la pasarela ahora lee solo el certificado TLS y el macaroon de administrador de LND, y ya no puede leer la semilla ni otros archivos de LND. Requiere LND 0.21.6-beta:3 o posterior.',
     de_DE:
-      'Fedimint auf 0.12.2 aktualisiert, ein Sicherheitsrelease, das einen Fehler in der LNv2-Zahlungsverarbeitung behebt, durch den das Gateway Guthaben verlieren konnte, und seine Lightning-Zahlungswege härtet. Vollständige Versionshinweise: https://github.com/fedimint/fedimint/releases/tag/v0.12.2',
+      'Erfordert StartOS 0.4.1 oder neuer. Mit LND als Lightning-Backend liest das Gateway jetzt nur noch das TLS-Zertifikat und das Admin-Macaroon von LND und kann den Seed und andere Dateien von LND nicht mehr lesen. Erfordert LND 0.21.6-beta:3 oder neuer.',
     pl_PL:
-      'Zaktualizowano Fedimint do 0.12.2, wydania bezpieczeństwa, które naprawia błąd w obsłudze płatności LNv2 mogący spowodować utratę środków przez bramkę, oraz wzmacnia jej ścieżki płatności Lightning. Pełne informacje o wydaniu: https://github.com/fedimint/fedimint/releases/tag/v0.12.2',
+      'Wymaga StartOS 0.4.1 lub nowszego. Z LND jako backendem Lightning bramka odczytuje teraz tylko certyfikat TLS i macaroon administratora LND i nie może już odczytać seeda ani innych plików LND. Wymaga LND 0.21.6-beta:3 lub nowszego.',
     fr_FR:
-      'Fedimint mis à jour vers 0.12.2, une version de sécurité qui corrige un bogue dans le traitement des paiements LNv2 pouvant faire perdre des fonds à la passerelle, et renforce ses chemins de paiement Lightning. Notes complètes : https://github.com/fedimint/fedimint/releases/tag/v0.12.2',
+      'Nécessite StartOS 0.4.1 ou ultérieur. Avec LND comme backend Lightning, la passerelle ne lit désormais que le certificat TLS et le macaron administrateur de LND, et ne peut plus lire la seed ni les autres fichiers de LND. Nécessite LND 0.21.6-beta:3 ou ultérieur.',
   },
   migrations: {},
 })

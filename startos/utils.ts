@@ -7,6 +7,6 @@ export const bitcoindCookiePath = `${bitcoindMountpoint}/.cookie`
 
 export const lndMountpoint = '/mnt/lnd'
 export const lndTlsCert = `${lndMountpoint}/tls.cert`
-export const lndMacaroon = `${lndMountpoint}/data/chain/bitcoin/mainnet/admin.macaroon`
+export const lndMacaroon = `${lndMountpoint}/admin.macaroon`
 
 export const DEFAULT_LDK_ALIAS = 'Fedimint LDK Gateway'
