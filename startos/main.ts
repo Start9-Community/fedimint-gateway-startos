@@ -80,8 +80,8 @@ export const main = sdk.setupMain(async ({ effects }) => {
   if (lightningBackend.type === 'lnd') {
     mounts = mounts.mountDependency<typeof lndManifest>({
       dependencyId: 'lnd',
-      volumeId: 'main',
-      subpath: null,
+      volumeId: 'public',
+      subpath: 'admin',
       mountpoint: lndMountpoint,
       readonly: true,
     })

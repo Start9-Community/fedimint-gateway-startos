@@ -53,12 +53,12 @@ One image, built here from upstream source.
 
 Two volumes, and what is _not_ backed up is the significant part.
 
-| Volume                | Mount Point    | Purpose                                            |
-| --------------------- | -------------- | -------------------------------------------------- |
-| `main`                | —              | The package store                                  |
-| `gatewayd`            | `/gatewayd`    | The gateway's own state, including LDK's           |
-| Bitcoin's `main` (ro) | `/mnt/bitcoin` | The RPC cookie — only when using a local node      |
-| LND's `main` (ro)     | `/mnt/lnd`     | TLS certificate and macaroon — only when using LND |
+| Volume                | Mount Point    | Purpose                                                                            |
+| --------------------- | -------------- | ---------------------------------------------------------------------------------- |
+| `main`                | —              | The package store                                                                  |
+| `gatewayd`            | `/gatewayd`    | The gateway's own state, including LDK's                                           |
+| Bitcoin's `main` (ro) | `/mnt/bitcoin` | The RPC cookie — only when using a local node                                      |
+| LND's `public` (ro)   | `/mnt/lnd`     | Only LND's `admin/` tier: TLS certificate and admin macaroon — only when using LND |
 
 The two dependency mounts are **conditional**: they are added only when the corresponding backend is selected, so a gateway running on LDK and Esplora mounts neither.
 
