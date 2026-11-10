@@ -110,6 +110,8 @@ One interface always, and a second only in one configuration.
 
 **The peer interface exists only when the Lightning backend is LDK**, because only then is there a Lightning node here to open channels against. On LND, channels belong to LND and are reached at LND's own peer address — so the interface is not merely unused, it is not exported at all.
 
+**The LDK peer port listens on IPv4 only:** gatewayd binds its LDK listener as `0.0.0.0` (`gateway/fedimint-lightning/src/ldk.rs`, v0.12.2). StartOS still lists the interface's IPv6 addresses, and connections to them are refused — give peers an IPv4 address.
+
 The gateway also binds an internal port for its peer-to-peer transport, which is not exported.
 
 ## Installation and First-Run Flow

@@ -36,7 +36,7 @@ After install, the gateway posts three critical tasks. Run them in this order:
 
 Open the **Gateway Interface** and log in with the admin password from setup. From the dashboard you can join Fedimint federations, manage Lightning channel liquidity, view balances and payment history, and configure routing fees. The gateway earns fees by routing Lightning payments in and out of the federations it has joined.
 
-If you chose the LDK backend, open inbound channels by having peers connect to your **LDK Peer Interface** address. If you chose LND, channel management is done in your existing LND service — the gateway uses LND for all Lightning operations.
+If you chose the LDK backend, open inbound channels by having peers connect to your **LDK Peer Interface** address. Use one of its IPv4 addresses: the LDK node does not accept connections on the IPv6 addresses the interface lists. If you chose LND, channel management is done in your existing LND service — the gateway uses LND for all Lightning operations.
 
 ### Actions
 
