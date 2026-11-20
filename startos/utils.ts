@@ -1,9 +1,11 @@
+import { rpcCookieName } from 'bitcoin-core-startos/startos/utils'
+
 export const uiPort = 8176
 export const irohPort = 8177
 export const ldkPort = 10010
 
 export const bitcoindMountpoint = '/mnt/bitcoin'
-export const bitcoindCookiePath = `${bitcoindMountpoint}/.cookie`
+export const bitcoindCookiePath = `${bitcoindMountpoint}/${rpcCookieName}`
 
 export const lndMountpoint = '/mnt/lnd'
 export const lndTlsCert = `${lndMountpoint}/tls.cert`

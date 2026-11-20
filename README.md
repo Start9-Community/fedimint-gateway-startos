@@ -53,12 +53,12 @@ One image, built here from upstream source.
 
 Two volumes, and what is _not_ backed up is the significant part.
 
-| Volume                | Mount Point    | Purpose                                                                            |
-| --------------------- | -------------- | ---------------------------------------------------------------------------------- |
-| `main`                | —              | The package store                                                                  |
-| `gatewayd`            | `/gatewayd`    | The gateway's own state, including LDK's                                           |
-| Bitcoin's `main` (ro) | `/mnt/bitcoin` | The RPC cookie — only when using a local node                                      |
-| LND's `public` (ro)   | `/mnt/lnd`     | Only LND's `admin/` tier: TLS certificate and admin macaroon — only when using LND |
+| Volume                  | Mount Point    | Purpose                                                                                 |
+| ----------------------- | -------------- | --------------------------------------------------------------------------------------- |
+| `main`                  | —              | The package store                                                                       |
+| `gatewayd`              | `/gatewayd`    | The gateway's own state, including LDK's                                                |
+| Bitcoin's `public` (ro) | `/mnt/bitcoin` | Bitcoin's RPC cookie and prune setting, none of its data — only when using a local node |
+| LND's `public` (ro)     | `/mnt/lnd`     | Only LND's `admin/` tier: TLS certificate and admin macaroon — only when using LND      |
 
 The two dependency mounts are **conditional**: they are added only when the corresponding backend is selected, so a gateway running on LDK and Esplora mounts neither.
 
@@ -124,6 +124,8 @@ Install seeds an empty store and raises **three** critical tasks. The service ca
 
 The password task is **reactive** — raised on any init that finds no password — while the two backend tasks are raised on install only. If a backend selection were somehow cleared, the service would refuse to start rather than prompt.
 
+Once started, gatewayd's own first-run setup takes over in the dashboard: after logging in, the owner chooses **Create New Wallet** (a new 12-word secret phrase) or **Recover Wallet** (an existing one). Nothing on StartOS records that phrase — see [Backups and Restore](#backups-and-restore).
+
 **The choice between LDK and LND is the consequential one.** LDK gives the gateway its own Lightning node, with its own channels, its own peer address, and its own funds to manage. LND puts the gateway in front of a node you already run. They are not interchangeable after the fact — see [Limitations](#limitations-and-differences).
 
 ## Actions
@@ -187,13 +189,18 @@ A service that will not start at all, with no failing check, is most likely a ba
 
 **Nothing is backed up, deliberately.** The package declares no volumes for backup at all.
 
-This is a considered refusal rather than an omission. On LDK, `/gatewayd` holds Lightning **channel monitors**, and restoring stale channel state is how a node gets penalised and loses funds — a backup that is safe to take is not safe to restore. Federation registrations are equally cheap to recreate.
+This is a considered refusal rather than an omission. On LDK, `/gatewayd` holds Lightning **channel monitors**, and restoring stale channel state is how a node gets penalised and loses funds — a backup that is safe to take is not safe to restore.
 
-So the recovery story is reconfiguration, not restore: choose the backends again, set a password, re-register with federations. On LDK, treat channel funds as at risk from a rebuild the same way you would for any Lightning node without a working backup — close channels before rebuilding if you can.
+**The gateway's 12-word secret phrase is the recovery path, and only the owner holds it.** gatewayd generates it when **Create New Wallet** is chosen in the dashboard's first-run setup (this package does not set `FM_GATEWAY_MNEMONIC` or skip that setup), and shows it again in the dashboard's **Gateway Secret Phrase** card once the admin password is re-entered. Upstream's `gateway-cli seed` and the authenticated `GET /mnemonic` return the same words. From it:
+
+- **Federation ecash** comes back by choosing **Recover Wallet** in a fresh install's first-run setup, entering the phrase, then re-joining each federation with **Recover** checked (`connect-fed --recover true`), or all at once with **Recover from File** from a file saved with **Export Invite Codes**.
+- **LDK's on-chain balance** comes back too: the LDK node's keys derive from the same phrase.
+- **LDK channel balances may not come back.** Channel and sweep state live only in `/gatewayd`. Before rebuilding, close all channels and keep the original gateway running until all closing funds have been swept and confirmed into its on-chain wallet. Initiating a close, especially a force close, does not make deleting that state safe.
+- On LND, Lightning funds are LND's and are recovered through LND's own backups.
 
 ## Limitations and Differences
 
-1. **No backups at all**, by design — restoring LDK channel state risks penalty closes.
+1. **No backups at all**, by design — restoring LDK channel state risks penalty closes. The gateway's secret phrase, which the owner must record, is what recovers it.
 2. **Switching Lightning backends is not a migration.** LDK's channels do not become LND's.
 3. **Three tasks must be completed before the service will start.** There are no defaults.
 4. **The Lightning backend can only be changed while stopped**, because it is a command-line mode.
@@ -234,7 +241,7 @@ startos_managed_env_vars:
   - FM_LDK_ALIAS # ldk backend only
   - FM_PORT_LDK
 dependencies:
-  - bitcoind # required only when the bitcoin backend is a local node
+  - bitcoind # required only when the bitcoin backend is a local node; its public volume mounted read-only at /mnt/bitcoin
   - lnd # required only when the lightning backend is lnd
 interfaces:
   ui: { type: ui, port: 8176 }
