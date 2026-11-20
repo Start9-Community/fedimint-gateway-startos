@@ -39,6 +39,29 @@ export const main = sdk.setupMain(async ({ effects }) => {
 
   const { lightningBackend, bitcoinBackend } = store
 
+  if (bitcoinBackend.type === 'bitcoind') {
+    // An older Bitcoin lacks the public volume, and mounting a missing volume fails the start.
+    const hasRpcVolume = await sdk
+      .getServiceManifest(effects, 'bitcoind', (m) =>
+        m?.volumes.includes(rpcVolumeId),
+      )
+      .const()
+    if (hasRpcVolume === false) {
+      return sdk.Daemons.of(effects).addHealthCheck('bitcoin', {
+        ready: {
+          display: i18n('Bitcoin Connection'),
+          gracePeriod: 0,
+          trigger: sdk.trigger.onceTrigger,
+          fn: () => ({
+            result: 'failure',
+            message: i18n('Update Bitcoin so the gateway can connect to it'),
+          }),
+        },
+        requires: [],
+      })
+    }
+  }
+
   // Iroh uses QUIC-over-UDP with public relays and NAT hole-punching, so it
   // works without an externally-reachable port. Binding 0.0.0.0 here only
   // affects intra-container; we intentionally do not expose this as an

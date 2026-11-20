@@ -46,6 +46,8 @@ export default {
     49: 'Bitcoin aún no es accesible en la red interna',
     50: 'LND aún no es accesible en la red interna',
     51: 'La contraseña de administrador actual se reemplaza y deja de funcionar.',
+    52: 'Conexión con Bitcoin',
+    53: 'Actualiza Bitcoin para que el Gateway pueda conectarse a él',
   },
   de_DE: {
     0: 'Fedimint Gateway wird gestartet...',
@@ -92,6 +94,8 @@ export default {
     49: 'Bitcoin ist im internen Netzwerk noch nicht erreichbar',
     50: 'LND ist im internen Netzwerk noch nicht erreichbar',
     51: 'Das aktuelle Admin-Passwort wird ersetzt und funktioniert nicht mehr.',
+    52: 'Bitcoin-Verbindung',
+    53: 'Aktualisiere Bitcoin, damit sich das Gateway damit verbinden kann',
   },
   pl_PL: {
     0: 'Uruchamianie Fedimint Gateway...',
@@ -138,6 +142,8 @@ export default {
     49: 'Bitcoin nie jest jeszcze osiągalny w sieci wewnętrznej',
     50: 'LND nie jest jeszcze osiągalny w sieci wewnętrznej',
     51: 'Obecne hasło administratora zostanie zastąpione i przestanie działać.',
+    52: 'Połączenie z Bitcoinem',
+    53: 'Zaktualizuj Bitcoin, aby bramka mogła się z nim połączyć',
   },
   fr_FR: {
     0: 'Démarrage de Fedimint Gateway...',
@@ -184,5 +190,7 @@ export default {
     49: 'Bitcoin n’est pas encore accessible sur le réseau interne',
     50: 'LND n’est pas encore accessible sur le réseau interne',
     51: 'Le mot de passe administrateur actuel est remplacé et cesse de fonctionner.',
+    52: 'Connexion à Bitcoin',
+    53: 'Mettez Bitcoin à jour pour que la passerelle puisse s’y connecter',
   },
 } satisfies Record<string, LangDict>
