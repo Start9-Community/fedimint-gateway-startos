@@ -181,7 +181,7 @@ One check, on the only daemon.
 | ---------- | ------------------- | ---------------------- |
 | `gatewayd` | "Gateway Interface" | Port 8176 is listening |
 
-With a local Bitcoin node selected and an installed Bitcoin too old to publish its `public` volume, the gateway mounts nothing and runs no daemon: a lone `bitcoin` check, "Bitcoin Connection", fails and asks for Bitcoin to be updated. The installed manifest is watched, so updating Bitcoin starts the gateway normally.
+With a local Bitcoin node or LND selected and that installed service too old to publish its `public` volume, the gateway mounts nothing and runs no daemon: in its place a `bitcoin` check ("Bitcoin Connection"), an `lnd` check ("LND Connection"), or both fail and ask for that service to be updated. The installed manifests are watched, so updating the service starts the gateway normally.
 
 It reports that the dashboard is serving. It says nothing about whether the gateway is registered with a federation, whether its Lightning backend has channels, or whether it has liquidity — all of which are visible in the dashboard itself.
 

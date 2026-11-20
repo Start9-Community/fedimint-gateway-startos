@@ -18,6 +18,7 @@ import {
   lndMacaroon,
   lndMountpoint,
   lndTlsCert,
+  lndVolumeId,
   uiPort,
 } from './utils'
 
@@ -39,27 +40,44 @@ export const main = sdk.setupMain(async ({ effects }) => {
 
   const { lightningBackend, bitcoinBackend } = store
 
-  if (bitcoinBackend.type === 'bitcoind') {
-    // An older Bitcoin lacks the public volume, and mounting a missing volume fails the start.
-    const hasRpcVolume = await sdk
-      .getServiceManifest(effects, 'bitcoind', (m) =>
-        m?.volumes.includes(rpcVolumeId),
+  // An older dependency lacks its public volume, and mounting a missing volume fails the start.
+  const lacksPublicVolume = async (id: 'bitcoind' | 'lnd', volumeId: string) =>
+    (await sdk
+      .getServiceManifest(effects, id, (m) => m?.volumes.includes(volumeId))
+      .const()) === false
+  const bitcoinOutdated =
+    bitcoinBackend.type === 'bitcoind' &&
+    (await lacksPublicVolume('bitcoind', rpcVolumeId))
+  const lndOutdated =
+    lightningBackend.type === 'lnd' &&
+    (await lacksPublicVolume('lnd', lndVolumeId))
+  if (bitcoinOutdated || lndOutdated) {
+    const updateCheck = (display: string, message: string) => ({
+      ready: {
+        display,
+        gracePeriod: 0,
+        trigger: sdk.trigger.onceTrigger,
+        fn: () => ({ result: 'failure' as const, message }),
+      },
+      requires: [],
+    })
+    return sdk.Daemons.of(effects)
+      .addHealthCheck('bitcoin', () =>
+        bitcoinOutdated
+          ? updateCheck(
+              i18n('Bitcoin Connection'),
+              i18n('Update Bitcoin so the gateway can connect to it'),
+            )
+          : null,
       )
-      .const()
-    if (hasRpcVolume === false) {
-      return sdk.Daemons.of(effects).addHealthCheck('bitcoin', {
-        ready: {
-          display: i18n('Bitcoin Connection'),
-          gracePeriod: 0,
-          trigger: sdk.trigger.onceTrigger,
-          fn: () => ({
-            result: 'failure',
-            message: i18n('Update Bitcoin so the gateway can connect to it'),
-          }),
-        },
-        requires: [],
-      })
-    }
+      .addHealthCheck('lnd', () =>
+        lndOutdated
+          ? updateCheck(
+              i18n('LND Connection'),
+              i18n('Update LND so Fedimint Gateway can connect to it'),
+            )
+          : null,
+      )
   }
 
   // Iroh uses QUIC-over-UDP with public relays and NAT hole-punching, so it
@@ -107,7 +125,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
   if (lightningBackend.type === 'lnd') {
     mounts = mounts.mountDependency<typeof lndManifest>({
       dependencyId: 'lnd',
-      volumeId: 'public',
+      volumeId: lndVolumeId,
       subpath: 'admin',
       mountpoint: lndMountpoint,
       readonly: true,

@@ -48,6 +48,8 @@ export default {
     51: 'La contraseña de administrador actual se reemplaza y deja de funcionar.',
     52: 'Conexión con Bitcoin',
     53: 'Actualiza Bitcoin para que el Gateway pueda conectarse a él',
+    54: 'Conexión con LND',
+    55: 'Actualiza LND para que Fedimint Gateway pueda conectarse a él',
   },
   de_DE: {
     0: 'Fedimint Gateway wird gestartet...',
@@ -96,6 +98,8 @@ export default {
     51: 'Das aktuelle Admin-Passwort wird ersetzt und funktioniert nicht mehr.',
     52: 'Bitcoin-Verbindung',
     53: 'Aktualisiere Bitcoin, damit sich das Gateway damit verbinden kann',
+    54: 'LND-Verbindung',
+    55: 'Aktualisiere LND, damit sich Fedimint Gateway damit verbinden kann',
   },
   pl_PL: {
     0: 'Uruchamianie Fedimint Gateway...',
@@ -144,6 +148,8 @@ export default {
     51: 'Obecne hasło administratora zostanie zastąpione i przestanie działać.',
     52: 'Połączenie z Bitcoinem',
     53: 'Zaktualizuj Bitcoin, aby bramka mogła się z nim połączyć',
+    54: 'Połączenie z LND',
+    55: 'Zaktualizuj LND, aby Fedimint Gateway mógł się z nim połączyć',
   },
   fr_FR: {
     0: 'Démarrage de Fedimint Gateway...',
@@ -192,5 +198,7 @@ export default {
     51: 'Le mot de passe administrateur actuel est remplacé et cesse de fonctionner.',
     52: 'Connexion à Bitcoin',
     53: 'Mettez Bitcoin à jour pour que la passerelle puisse s’y connecter',
+    54: 'Connexion à LND',
+    55: 'Mettez LND à jour pour que Fedimint Gateway puisse s’y connecter',
   },
 } satisfies Record<string, LangDict>

@@ -72,6 +72,8 @@ const dict = {
   'The current admin password is replaced and stops working.': 51,
   'Bitcoin Connection': 52,
   'Update Bitcoin so the gateway can connect to it': 53,
+  'LND Connection': 54,
+  'Update LND so Fedimint Gateway can connect to it': 55,
 } as const
 
 /**
