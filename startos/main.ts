@@ -1,6 +1,10 @@
 import { FileHelper } from '@start9labs/start-sdk'
 import { manifest as bitcoinManifest } from 'bitcoin-core-startos/startos/manifest'
-import { rpcHostId, rpcPort } from 'bitcoin-core-startos/startos/utils'
+import {
+  rpcHostId,
+  rpcPort,
+  rpcVolumeId,
+} from 'bitcoin-core-startos/startos/utils'
 import { manifest as lndManifest } from 'lnd-startos/startos/manifest'
 import { gRPCHostId, gRPCPort } from 'lnd-startos/startos/interfaces'
 import { storeJson } from './fileModels/store'
@@ -70,7 +74,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
   if (bitcoinBackend.type === 'bitcoind') {
     mounts = mounts.mountDependency<typeof bitcoinManifest>({
       dependencyId: 'bitcoind',
-      volumeId: 'main',
+      volumeId: rpcVolumeId,
       subpath: null,
       mountpoint: bitcoindMountpoint,
       readonly: true,
