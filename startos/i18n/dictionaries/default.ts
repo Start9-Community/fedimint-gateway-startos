@@ -70,6 +70,8 @@ const dict = {
   'Bitcoin is not yet reachable on the internal network': 49,
   'LND is not yet reachable on the internal network': 50,
   'The current admin password is replaced and stops working.': 51,
+  'Bitcoin Connection': 52,
+  'Update Bitcoin so the gateway can connect to it': 53,
 } as const
 
 /**

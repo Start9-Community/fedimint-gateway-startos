@@ -26,7 +26,7 @@ After install, the gateway posts three critical tasks. Run them in this order:
    This choice is permanent for the lifetime of the install.
 
 3. **Choose your Bitcoin backend.** Run the _Bitcoin Configuration_ task and pick either:
-   - **Local node (recommended)** — uses the Bitcoin service. Install **Bitcoin** first if you haven't already.
+   - **Local node (recommended)** — uses the Bitcoin service. Install **Bitcoin** first if you haven't already. If the gateway's **Bitcoin Connection** check asks you to update Bitcoin, install Bitcoin's update; the gateway starts on its own once it is done.
    - **Esplora** — paste a full Esplora API URL (defaults to `https://mempool.space/api`). Note that this leaks transaction-level metadata to the operator of that API.
 4. Start the service, open the **Gateway Interface**, and log in with your admin password. Choose **Create New Wallet** for a new gateway, or **Recover Wallet** to restore one (see [Recovering the gateway](#recovering-the-gateway)).
 5. **Write down the gateway's 12-word secret phrase right away.** On the dashboard, the **Gateway Secret Phrase** card shows it once you enter your admin password. Keep it offline and private: anyone holding it can take the gateway's funds. StartOS backups do not include the gateway, so this phrase is the only way to recover it.
