@@ -7,6 +7,7 @@ export const ldkPort = 10010
 export const bitcoindMountpoint = '/mnt/bitcoin'
 export const bitcoindCookiePath = `${bitcoindMountpoint}/${rpcCookieName}`
 
+export const lndVolumeId = 'public'
 export const lndMountpoint = '/mnt/lnd'
 export const lndTlsCert = `${lndMountpoint}/tls.cert`
 export const lndMacaroon = `${lndMountpoint}/admin.macaroon`

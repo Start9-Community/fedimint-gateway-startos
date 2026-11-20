@@ -21,7 +21,7 @@ After install, the gateway posts three critical tasks. Run them in this order:
 1. **Create your Gateway admin password.** Run the _Create Password_ task. A strong random password is generated for you and shown once — save it to a password manager before dismissing.
 2. **Choose your Lightning backend.** Run the _Lightning Configuration_ task and pick either:
    - **LDK (Integrated)** — runs a Lightning node inside the gateway. Set the public node alias (default: _Fedimint LDK Gateway_).
-   - **Local LND node** — uses the LND service from the StartOS marketplace. Install **LND** first if you haven't already.
+   - **Local LND node** — uses the LND service from the StartOS marketplace. Install **LND** first if you haven't already. If the gateway's **LND Connection** check asks you to update LND, install LND's update; the gateway starts on its own once it is done.
 
    This choice is permanent for the lifetime of the install.
 
