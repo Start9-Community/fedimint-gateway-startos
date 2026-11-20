@@ -28,7 +28,7 @@ After install, the gateway posts three critical tasks. Run them in this order:
 3. **Choose your Bitcoin backend.** Run the _Bitcoin Configuration_ task and pick either:
    - **Local node (recommended)** — uses the Bitcoin service. Install **Bitcoin** first if you haven't already.
    - **Esplora** — paste a full Esplora API URL (defaults to `https://mempool.space/api`). Note that this leaks transaction-level metadata to the operator of that API.
-4. Start the service, open the **Gateway Interface**, and log in with your admin password. Choose **Create Wallet** for a new gateway, or **Recover Wallet** to restore one (see [Recovering the gateway](#recovering-the-gateway)).
+4. Start the service, open the **Gateway Interface**, and log in with your admin password. Choose **Create New Wallet** for a new gateway, or **Recover Wallet** to restore one (see [Recovering the gateway](#recovering-the-gateway)).
 5. **Write down the gateway's 12-word secret phrase right away.** On the dashboard, the **Gateway Secret Phrase** card shows it once you enter your admin password. Keep it offline and private: anyone holding it can take the gateway's funds. StartOS backups do not include the gateway, so this phrase is the only way to recover it.
 
 ## Using Fedimint Gateway
@@ -53,7 +53,7 @@ What the phrase does and does not recover:
 
 - **Ecash in federations:** recovered, once you re-join each federation with **Recover**.
 - **LDK on-chain balance:** recovered; it comes from the same phrase.
-- **LDK channel balances: may not be recoverable.** Channel state lives only on this gateway's own storage and is in no backup or phrase. Close your channels before you uninstall, move or rebuild the gateway, so their funds return on-chain where the phrase can recover them.
+- **LDK channel balances: may not be recoverable.** Channel and sweep state live only on this gateway's own storage and are in no backup or phrase. Before you uninstall, move or rebuild the gateway, close all channels and keep it running until all closing funds have been swept and confirmed into its on-chain wallet. Starting a close, especially a force close, is not enough: funds still pending need that state to be claimed.
 - **With LND as the backend,** your Lightning funds belong to LND and are recovered through LND's own backup, not this phrase.
 
 ### Actions
